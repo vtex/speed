@@ -1,0 +1,131 @@
+tryfiles = require 'connect-tryfiles'
+connect = require 'connect'
+
+module.exports = (grunt) ->
+  pkg = grunt.file.readJSON('package.json')
+
+  host = process.env.VTEX_HOST or 'vtexcommerce'
+
+  open = if pkg.accountName then "http://#{pkg.accountName}.vtexlocal.com.br" else undefined
+
+  config =
+    clean:
+      main: ['build']
+
+    copy:
+      main:
+        files: [
+          expand: true
+          cwd: 'src/'
+          src: ['**', '!**/*.coffee', '!**/*.less']
+          dest: "build/"
+        ]
+
+    coffee:
+      main:
+        files: [
+          expand: true
+          cwd: 'src/'
+          src: ['**/*.coffee']
+          dest: "build/"
+          ext: '.js'
+        ]
+
+    less:
+      main:
+        files: [
+          expand: true
+          cwd: 'src/'
+          src: ['**/*.less']
+          dest: "build/"
+          ext: '.css'
+        ]
+
+    cssmin:
+      main:
+        expand: true
+        cwd: 'build/'
+        src: ['*.css', '!*.min.css']
+        dest: 'build/'
+        ext: '.min.css'
+
+    uglify:
+      options:
+        mangle: false
+      main:
+        files: [{
+          expand: true
+          cwd: 'build/'
+          src: ['*.js', '!*.min.js']
+          dest: 'build/'
+          ext: '.min.js'
+        }]
+
+    imagemin:
+      main:
+        files: [
+          expand: true
+          cwd: 'src/'
+          src: ['**/*.{png,jpg,gif}']
+          dest: 'build/'
+        ]
+
+    connect:
+      http:
+        options:
+          livereload: true
+          hostname: "*"
+          open: open
+          port: 80
+          middleware: [
+            tryfiles '**', "http://portal.#{host}.com.br:80", {cwd: 'build/'}
+            connect.static './build/'
+          ]
+      https:
+        options:
+          livereload: true
+          hostname: "*"
+          https: true
+          protocol: 'https'
+          port: 443
+          middleware: [
+            tryfiles('**',
+              {target: "https://portal.#{host}.com.br:443",
+              secure: false},
+              {cwd: 'build/'})
+          ,
+            connect.static './build/'
+          ]
+
+    watch:
+      options:
+        livereload: true
+        spawn: false
+      coffee:
+        files: ['src/**/*.coffee']
+        tasks: ['coffee']
+      less:
+        files: ['src/**/*.less']
+        tasks: ['less']
+      main:
+        files: ['src/**/*.*']
+        tasks: ['copy']
+      grunt:
+        files: ['Gruntfile.coffee']
+
+  tasks =
+    # Building block tasks
+    build: ['clean', 'copy:main', 'coffee', 'less']
+    min: ['uglify', 'cssmin'] # minifies files
+    # Deploy tasks
+    dist: ['build', 'min'] # Dist - minifies files
+    test: []
+    # Development tasks
+    default: ['build', 'connect', 'watch']
+    devmin: ['build', 'min', 'connect:https',
+             'connect:http:keepalive'] # Minifies files and serve
+
+  # Project configuration.
+  grunt.initConfig config
+  grunt.loadNpmTasks name for name of pkg.devDependencies when name[0..5] is 'grunt-'
+  grunt.registerTask taskName, taskArray for taskName, taskArray of tasks

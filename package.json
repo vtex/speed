@@ -1,0 +1,37 @@
+{
+  "name": "vtex-speed",
+  "version": "0.1.0",
+  "readmeFilename": "README.md",
+  "description": "VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!",
+  "devDependencies": {
+    "connect-mock": "~0.1.0",
+    "connect-tryfiles": "^0.1.0",
+    "grunt": "~0.4.2",
+    "grunt-connect-proxy": "~0.1.7",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-coffee": "~0.8.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-connect": "~0.7.1",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-less": "~0.8.3",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.1",
+    "harmon": "^0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vtex/speed.git"
+  },
+  "keywords": [
+    "grunt",
+    "coffee",
+    "less",
+    "livereload",
+    "vtex"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "connect": "^2.14.5"
+  }
+}

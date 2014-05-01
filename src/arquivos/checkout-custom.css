@@ -1,0 +1,419 @@
+@import url("/arquivos/checkout-custom-saraiva.css");
+@import url("/arquivos/checkout-custom-ricardo.css");
+/*-----------------------------*/
+/*     Imports e Regras        */
+/*-----------------------------*/
+/*-----------------------------*/
+/* variaveis                   */
+/*-----------------------------*/
+/*-----------------------------*/
+/* mixins                      */
+/*-----------------------------*/
+.link {
+    color: #4047a1;
+}
+.link:hover {
+    color: #4047a1;
+}
+.border-default {
+    border: 1px solid #dbdbdb;
+}
+.border-none {
+    border: 0 !important;
+}
+.no-border-radius {
+    border-radius: 0;
+}
+.hiden {
+    display: none;
+}
+.toltips {
+    border-color: #ffca00;
+    color: #000000;
+}
+/*-----------------------------*/
+/*     Elementos Gerais        */
+/*-----------------------------*/
+body {
+    color: #5b5a5a;
+    font-family: 'Arial', 'â€‹Verdana', 'â€‹Sans-Serif';
+    background: green;
+    margin: 0px;
+}
+body .container {
+    min-height: 400px;
+}
+#locale-selector-template-holder {
+    display: none;
+}
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input,
+.address-item {
+    border-radius: 0;
+}
+button.btn {
+    border-radius: 2px;
+}
+a {
+    color: #4047a1;
+}
+a:hover {
+    color: #4047a1;
+}
+h1.hide,
+h1.title {
+    color: #333333;
+    font-size: 20px !important;
+    margin: -40px 0 30px 160px;
+}
+.btn-success,
+.btn-primary {
+    background: #7eae26;
+    background: -moz-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7eae26), color-stop(100%, #457f0e));
+    background: -webkit-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -o-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -ms-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: linear-gradient(to bottom, #7eae26 0%, #457f0e 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@color', endColorstr='@color2', GradientType=0);
+    border-radius: 2px;
+    border-color: #457f0e;
+    color: #ffffff !important;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+.btn-success:hover,
+.btn-primary:hover,
+.btn-success:focus,
+.btn-primary:focus,
+.btn-success:active,
+.btn-primary:active {
+    background: #457f0e;
+    color: #ffffff !important;
+}
+/* ---- Toltips e Modais ---- */
+.cvv-help {
+    border-color: #ffca00;
+    color: #000000;
+}
+.field-help {
+    border-color: #ffca00;
+    color: #000000;
+    background-color: #ffca00;
+}
+.field-help .help-arrow.top-arrow {
+    border-bottom-color: #ffca00;
+}
+.field-help .help-arrow.right-arrow {
+    border-left-color: #ffca00;
+}
+.field-help .help-arrow.bottom-arrow {
+    border-top-color: #ffca00;
+}
+.field-help .help-arrow.left-arrow {
+    border-right-color: #ffca00;
+}
+.modal {
+    background: #ffca00;
+    color: #000000;
+    padding-bottom: 10px;
+}
+.modal .btn {
+    background: #7eae26;
+    background: -moz-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7eae26), color-stop(100%, #457f0e));
+    background: -webkit-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -o-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -ms-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: linear-gradient(to bottom, #7eae26 0%, #457f0e 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@color', endColorstr='@color2', GradientType=0);
+    border-radius: 2px;
+    border-color: #457f0e;
+    color: #ffffff !important;
+    font-size: 15px;
+    text-transform: uppercase;
+    text-shadow: none;
+}
+.modal .btn:hover,
+.modal .btn:focus,
+.modal .btn:active {
+    background: #457f0e;
+    color: #ffffff !important;
+}
+.modal-footer {
+    border: 0 !important;
+    background: #ffca00;
+    box-shadow: none;
+}
+/* ---- Mobile ---- */
+@media screen and (max-width: 380px) {
+    .checkout-default-security {
+        margin-top: -85px !important;
+    }
+}
+@media screen and (max-width: 800px) {
+    body {
+        padding: 0px;
+    }
+    body .container {
+        padding: 0 15px !important;
+    }
+    body h1.hide,
+    body h1.title {
+        color: #333333;
+        font-size: 20px !important;
+        margin: 0px;
+    }
+    .checkout-default-container,
+    .checkout-default-header-container {
+        width: auto !important;
+    }
+    .checkout-default-footer {
+        display: none;
+    }
+    .login .checkout-default-footer {
+        display: block;
+    }
+    .login .checkout-default-footer-info {
+        background-position: -570px;
+    }
+    .login .checkout-default-copyright {
+        margin: auto;
+    }
+    .payment-group-list-btn {
+        width: auto;
+    }
+    .box-step-content .payment-group-list-btn a.active {
+        border-right: 1px solid #A5A8AA !important;
+        margin-left: 0 !important;
+    }
+    .mini-cart {
+        margin-bottom: 50px;
+    }
+    .containerPage {
+        background: none !important;
+    }
+}
+/*-----------------------------*/
+/*    Header e Footer          */
+/*-----------------------------*/
+.checkout-default-header {
+    width: 100%;
+}
+.checkout-default-container {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 945px;
+}
+.checkout-default-logo {
+    background: url('/arquivos/checkout-default-logo.png') no-repeat;
+    clear: both;
+    display: block;
+    float: left;
+    height: 100px;
+    margin-top: 10px;
+    width: 200px;
+}
+.checkout-default-security {
+    background: url('/arquivos/checkout-default-security.png') no-repeat;
+    float: right;
+    height: 60px;
+    margin-top: 25px;
+    width: 230px;
+}
+.checkout-default-footer {
+    background: url('/arquivos/checkout-default-footer.jpg') repeat-x;
+    margin-top: 20px;
+    padding-top: 20px;
+    width: 100%;
+}
+.checkout-default-footer-info {
+    background: url('/arquivos/checkout-default-footer-info.png') center center no-repeat;
+    height: 40px;
+    margin-bottom: 16px;
+}
+.checkout-default-copyright {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+/*-----------------------------*/
+/*    		Checkout           */
+/*-----------------------------*/
+/* ---- Total ---- */
+.step,
+.totalizers {
+    border-radius: 0;
+    border: 1px solid #dbdbdb;
+}
+.step tfoot .info,
+.totalizers tfoot .info,
+.step tfoot .monetary,
+.totalizers tfoot .monetary {
+    color: #4047a1;
+    padding-bottom: 5px;
+}
+.step .accordion-heading span,
+.totalizers .accordion-heading span {
+    color: #5b5a5a;
+}
+.step .accordion-heading .accordion-toggle .link-box-edit,
+.totalizers .accordion-heading .accordion-toggle .link-box-edit {
+    border-radius: 0 0 0 6px;
+    color: #4047a1;
+    top: -5px;
+    right: -5px;
+}
+.step.active .accordion-heading,
+.totalizers.active .accordion-heading {
+    background: none;
+}
+/*-----------------------------*/
+/*    		Cart               */
+/*-----------------------------*/
+.cart {
+    border: 0 !important;
+}
+.cart-items thead {
+    background: #f2f2f2;
+    color: #737373;
+}
+.cart-items thead th {
+    border: 1px solid #dbdbdb;
+}
+.cart-items .product-item {
+    border-bottom: 1px solid #dbdbdb;
+}
+.link-choose-more-products {
+    font-size: 17px;
+}
+.link-cart.pull-right small {
+    font-size: 13px;
+}
+/*-----------------------------*/
+/*        Order form           */
+/*-----------------------------*/
+.box-step-content .payment-group-list-btn a,
+.box-step-content .gift-card-section,
+.box-step-content .steps-view {
+    border: 1px solid #dbdbdb;
+    border-radius: 0;
+}
+.box-step-content .payment-group-list-btn a.active,
+.box-step-content .gift-card-section.active,
+.box-step-content .steps-view.active {
+    margin-left: 2px;
+    border-right: 0px;
+}
+.box-step-content .gift-card-section {
+    padding: 10px 18px;
+}
+.shipping-data .create a {
+    border-radius: 0;
+}
+.mini-cart .table {
+    margin-top: 10px;
+}
+/*----- Modal Edit--*/
+.modal-body button span {
+    text-transform: none;
+}
+.modal-body #vtexIdUI-google-plus {
+    color: #DA573B !important;
+    font-weight: bold;
+    text-shadow: none;
+}
+.modal-body .vtexIdUI-others-send-email {
+    color: #000 !important;
+}
+.modal-body .vtexIdUI-others-send-email:hover {
+    color: #000 !important;
+}
+.modal-body input {
+    border-radius: 2px !important;
+}
+.vtexIdUI .vtexIdUI-page .btn {
+    border-radius: 2px !important;
+}
+.client-pre-email .client-email .loading-inline {
+    right: 125px;
+}
+/*-----------------------------*/
+/*        Order Placed         */
+/*-----------------------------*/
+.page-header {
+    margin: 10px 0;
+}
+.page-header h1 {
+    color: #333333;
+    font-size: 25px;
+}
+.ordergroup h2.order-title {
+    color: #457f0e;
+}
+.ordergroup hr {
+    visibility: hidden;
+}
+.ordergroup .page-header {
+    border: 0 !important;
+}
+.ordergroup .order-info .total-info {
+    border: 1px solid #dbdbdb;
+    background: #f2f2f2;
+    color: #737373;
+    padding: 10px;
+}
+.seller-info .seller-provided {
+    display: none;
+}
+.containerPage {
+    background: url('/arquivos/checkout-default-cat.png') top right no-repeat;
+    background-position-y: 140px;
+}
+.containerPage a.btn {
+    text-shadow: none;
+    margin: 10px 0;
+}
+/*-----------------------------*/
+/*          My Order           */
+/*-----------------------------*/
+.ordergroup,
+.form-search .input-append .search-query {
+    border-radius: 0;
+}
+button.btn {
+    background: #7eae26;
+    background: -moz-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7eae26), color-stop(100%, #457f0e));
+    background: -webkit-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -o-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: -ms-linear-gradient(top, #7eae26 0%, #457f0e 100%);
+    background: linear-gradient(to bottom, #7eae26 0%, #457f0e 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@color', endColorstr='@color2', GradientType=0);
+    border-radius: 2px;
+    border-color: #457f0e;
+    color: #ffffff !important;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+button.btn:hover,
+button.btn:focus,
+button.btn:active {
+    background: #457f0e;
+    color: #ffffff !important;
+}
