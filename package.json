@@ -4,7 +4,7 @@
   "readmeFilename": "README.md",
   "description": "VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!",
   "devDependencies": {
-    "connect-mock": "~0.1.0",
+    "connect-livereload": "git://github.com/gadr/connect-livereload",
     "connect-tryfiles": "^0.1.0",
     "grunt": "~0.4.2",
     "grunt-connect-proxy": "~0.1.7",
@@ -16,8 +16,7 @@
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-less": "~0.8.3",
     "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-watch": "~0.5.1",
-    "harmon": "^0.3.0"
+    "grunt-contrib-watch": "~0.5.1"
   },
   "repository": {
     "type": "git",

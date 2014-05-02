@@ -1,6 +1,7 @@
 tryfiles = require 'connect-tryfiles'
+lr = require 'connect-livereload'
 connect = require 'connect'
-
+LR_URL = "//' + (location.hostname || 'localhost') + '/livereload.js"
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
@@ -73,27 +74,26 @@ module.exports = (grunt) ->
     connect:
       http:
         options:
-          livereload: true
           hostname: "*"
           open: open
           port: 80
           middleware: [
+            lr({disableAcceptEncoding: true, src: LR_URL})
             tryfiles '**', "http://portal.#{host}.com.br:80", {cwd: 'build/'}
             connect.static './build/'
           ]
       https:
         options:
-          livereload: true
           hostname: "*"
           https: true
           protocol: 'https'
           port: 443
           middleware: [
+            lr({disableAcceptEncoding: true, src: LR_URL})
             tryfiles('**',
               {target: "https://portal.#{host}.com.br:443",
               secure: false},
               {cwd: 'build/'})
-          ,
             connect.static './build/'
           ]
 

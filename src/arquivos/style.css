@@ -1,0 +1,98 @@
+body {
+  background-color: transparent;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.btn,
+.valor-por {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+}
+.btn {
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.valor-por {
+  font-weight: 400;
+}
+
+#ajaxBusy {display: none}
+.container {
+  background-color: #fff;
+}
+.masthead {
+  padding: 10px 5px 0
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  margin: 40px 0;
+  text-align: center;
+}
+.jumbotron h1 {
+  font-size: 72px;
+  line-height: 1;
+  font-weight: 100
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 60px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+#footerCredits {
+  background-color: #F5F5F5;
+  padding: 60px 10px;  
+}
+#footerCredits img {
+  display: inline-block;
+  margin-bottom: 40px;
+}
+    h1.lead {
+      margin-top: 0
+    }
+    .valor-por {
+    font-size: 36px;
+    margin-top: 4px;
+    display: block;
+    line-height: 140%;
+    }
+    .descricao-preco {
+      margin-top: 10px;
+    }
+    .buy-button {
+      float: right;
+      width: 30%;
+      font-weight: bold;
+    }
+.thumbnails .data .lead a {
+  display: block;
+  line-height: 130%;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 140%;
+}
+#productPrice em {font-style: normal}
+#productDescription .title,
+.collectionWrap h2 {font-weight: 300}
+.collectionWrap .label {
+  font-weight: 400;
+  line-height: 21px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+}
