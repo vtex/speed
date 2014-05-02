@@ -107,6 +107,9 @@ module.exports = (grunt) ->
       less:
         files: ['src/**/*.less']
         tasks: ['less']
+      images:
+        files: ['src/**/*.{png,jpg,gif}']
+        tasks: ['imagemin']
       main:
         files: ['src/**/*.*']
         tasks: ['copy']
@@ -115,7 +118,7 @@ module.exports = (grunt) ->
 
   tasks =
     # Building block tasks
-    build: ['clean', 'copy:main', 'coffee', 'less']
+    build: ['clean', 'copy:main', 'coffee', 'less', 'imagemin']
     min: ['uglify', 'cssmin'] # minifies files
     # Deploy tasks
     dist: ['build', 'min'] # Dist - minifies files
