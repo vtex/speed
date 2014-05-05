@@ -7,7 +7,11 @@ module.exports = (grunt) ->
 
   host = process.env.VTEX_HOST or 'vtexcommerce'
 
+  verbose = grunt.option('verbose')
+  
   open = if pkg.accountName then "http://#{pkg.accountName}.vtexlocal.com.br" else undefined
+
+  errorHandler = (err, req, res, next) -> grunt.log.warn(err.code.red, req.url.yellow)
 
   config =
     clean:
@@ -79,8 +83,9 @@ module.exports = (grunt) ->
           port: 80
           middleware: [
             lr({disableAcceptEncoding: true, src: LR_URL})
-            tryfiles '**', "http://portal.#{host}.com.br:80", {cwd: 'build/'}
+            tryfiles '**', "http://portal.#{host}.com.br:80", {cwd: 'build/', verbose: verbose}
             connect.static './build/'
+            errorHandler
           ]
       https:
         options:
@@ -93,8 +98,9 @@ module.exports = (grunt) ->
             tryfiles('**',
               {target: "https://portal.#{host}.com.br:443",
               secure: false},
-              {cwd: 'build/'})
+              {cwd: 'build/', verbose: verbose})
             connect.static './build/'
+            errorHandler
           ]
 
     watch:

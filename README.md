@@ -63,3 +63,11 @@ Now, when `grunt` runs, this store will open automatically.
 We always want to hear you! Please report any problems to the issues page:
 
 https://github.com/vtex/speed/issues
+
+## FAQ
+
+### What is `ECONNRESET`?
+
+The HTTP response socket hung up before sending a complete reply.  
+You probably manually stopped a request on your browser.  
+Thus, the proxy shouted: "I was receiving a response and it stopped abruptly!"
