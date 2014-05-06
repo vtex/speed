@@ -1,18 +1,22 @@
 tryfiles = require 'connect-tryfiles'
 lr = require 'connect-livereload'
+httplease = require 'connect-http-please'
 connect = require 'connect'
 LR_URL = "//' + (location.hostname || 'localhost') + '/livereload.js"
+
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
-  host = process.env.VTEX_HOST or 'vtexcommerce'
+  environment = process.env.VTEX_HOST or 'vtexcommerce'
 
   verbose = grunt.option('verbose')
   
   open = if pkg.accountName then "http://#{pkg.accountName}.vtexlocal.com.br" else undefined
 
-  errorHandler = (err, req, res, next) -> grunt.log.warn(err.code.red, req.url.yellow)
-
+  errorHandler = (err, req, res, next) -> 
+    errString = err.code?.red ? err.toString().red
+    grunt.log.warn(errString, req.url.yellow)
+              
   config =
     clean:
       main: ['build']
@@ -83,22 +87,8 @@ module.exports = (grunt) ->
           port: 80
           middleware: [
             lr({disableAcceptEncoding: true, src: LR_URL})
-            tryfiles '**', "http://portal.#{host}.com.br:80", {cwd: 'build/', verbose: verbose}
-            connect.static './build/'
-            errorHandler
-          ]
-      https:
-        options:
-          hostname: "*"
-          https: true
-          protocol: 'https'
-          port: 443
-          middleware: [
-            lr({disableAcceptEncoding: true, src: LR_URL})
-            tryfiles('**',
-              {target: "https://portal.#{host}.com.br:443",
-              secure: false},
-              {cwd: 'build/', verbose: verbose})
+            httplease(replaceHost: ((h) -> h.replace("vtexlocal", environment)), verbose: verbose)
+            tryfiles '**', "http://portal.#{environment}.com.br:80", {cwd: 'build/', verbose: verbose}
             connect.static './build/'
             errorHandler
           ]
@@ -131,7 +121,7 @@ module.exports = (grunt) ->
     test: []
     # Development tasks
     default: ['build', 'connect', 'watch']
-    devmin: ['build', 'min', 'connect:https',
+    devmin: ['build', 'min',
              'connect:http:keepalive'] # Minifies files and serve
 
   # Project configuration.
