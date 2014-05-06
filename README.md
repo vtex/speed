@@ -3,16 +3,22 @@ VTEX Speed
 
 VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!
 
-## Quick Start
+## Install
 
-Download and unzip this repo:
+Clone this repo or download and unzip it.
+
+If you're on a UNIX system, this command downloads and unzips for you:
 
     wget -qO- -O vtex-speed.zip https://github.com/vtex/speed/archive/master.zip && unzip vtex-speed.zip && rm vtex-speed.zip
-    cd speed-master
+
+
+## Quick Start
+
+Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
+
+    cd speed
     npm i
     grunt
-
-Now, go to any store on the `vtexlocal` hostname!
 
 Your browser should automatically open here: http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
 
