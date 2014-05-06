@@ -39,7 +39,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: 'src/'
-          src: ['**/*.less']
+          src: ['main.less']
           dest: "build/"
           ext: '.css'
         ]
@@ -72,6 +72,12 @@ module.exports = (grunt) ->
           src: ['**/*.{png,jpg,gif}']
           dest: 'build/'
         ]
+
+    sprite:
+      all: 
+        src: 'src/sprite/*.png'
+        destImg: 'src/spritesheet.png'
+        destCSS: 'src/sprite.less'
 
     connect:
       http:
@@ -108,7 +114,7 @@ module.exports = (grunt) ->
 
   tasks =
     # Building block tasks
-    build: ['clean', 'copy:main', 'coffee', 'less', 'imagemin']
+    build: ['clean', 'sprite', 'copy:main', 'coffee', 'less', 'imagemin']
     min: ['uglify', 'cssmin'] # minifies files
     # Deploy tasks
     dist: ['build', 'min'] # Dist - minifies files
