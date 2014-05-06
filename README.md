@@ -20,7 +20,11 @@ Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
     npm i
     grunt
 
-Your browser should automatically open here: http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
+Your browser should automatically open here:  
+
+http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
+
+** Did you know? **  You can replace `basedevmkp` with the accountName of your store.
 
 Now, copy a CSS file from that site over to your `src/` folder.
 We already have `src/arquivos/style.css` there as an example.
