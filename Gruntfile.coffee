@@ -1,7 +1,3 @@
-tryfiles = require 'connect-tryfiles'
-lr = require 'connect-livereload'
-httplease = require 'connect-http-please'
-connect = require 'connect'
 LR_URL = "//' + (location.hostname || 'localhost') + '/livereload.js"
 
 module.exports = (grunt) ->
@@ -86,10 +82,10 @@ module.exports = (grunt) ->
           open: open
           port: 80
           middleware: [
-            lr({disableAcceptEncoding: true, src: LR_URL})
-            httplease(replaceHost: ((h) -> h.replace("vtexlocal", environment)), verbose: verbose)
-            tryfiles '**', "http://portal.#{environment}.com.br:80", {cwd: 'build/', verbose: verbose}
-            connect.static './build/'
+            require('connect-livereload')({disableAcceptEncoding: true, src: LR_URL})
+            require('connect-http-please')(replaceHost: ((h) -> h.replace("vtexlocal", environment)), {verbose: verbose})
+            require('connect-tryfiles')('**', "http://portal.#{environment}.com.br:80", {cwd: 'build/', verbose: verbose})
+            require('connect').static('./build/')
             errorHandler
           ]
 
