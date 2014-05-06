@@ -1,7 +1,7 @@
 {
   "name": "vtex-speed",
   "accountName": "basedevmkp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "readmeFilename": "README.md",
   "description": "VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!",
   "devDependencies": {
