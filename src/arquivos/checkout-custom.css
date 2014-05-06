@@ -39,7 +39,12 @@ body {
     margin: 0px;
 }
 body .container {
-    min-height: 400px;
+    min-height: 70px;
+}
+
+body .container-cart {
+    margin-top: 20px;
+    margin-bottom: -20px;
 }
 #locale-selector-template-holder {
     display: none;
