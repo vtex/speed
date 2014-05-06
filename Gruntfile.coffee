@@ -11,7 +11,7 @@ module.exports = (grunt) ->
 
   verbose = grunt.option('verbose')
   
-  open = if pkg.accountName then "http://#{pkg.accountName}.vtexlocal.com.br" else undefined
+  open = if pkg.accountName then "http://#{pkg.accountName}.vtexlocal.com.br/?debugcss=true&debugjs=true" else undefined
 
   errorHandler = (err, req, res, next) -> 
     errString = err.code?.red ? err.toString().red

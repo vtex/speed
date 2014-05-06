@@ -12,9 +12,9 @@ Download and unzip this repo:
     npm i
     grunt
 
-Go to a store on the `vtexlocal` hostname!
+Now, go to any store on the `vtexlocal` hostname!
 
-Example: http://basedevmkp.vtexlocal.com.br/?debugcss=true
+Your browser should automatically open here: http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
 
 Now, copy a CSS file from that site over to your `src/` folder.
 We already have `src/arquivos/style.css` there as an example.
@@ -56,7 +56,8 @@ If you want to open the same store every time, you can add an `accountName` prop
 
     "accountName": "basedevmkp"
 
-Now, when `grunt` runs, this store will open automatically.
+When `grunt` runs, this store will open automatically.  
+If you wish, you may delete that key and grunt will not open any address.
 
 ## Feedback
 
