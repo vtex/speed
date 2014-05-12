@@ -5,6 +5,7 @@
   "readmeFilename": "README.md",
   "description": "VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!",
   "devDependencies": {
+    "connect": "^2.14.5",
     "connect-http-please": "^0.1.1",
     "connect-livereload": "git://github.com/gadr/connect-livereload#0852873",
     "connect-tryfiles": "^0.2.1",
@@ -32,8 +33,5 @@
     "livereload",
     "vtex"
   ],
-  "license": "MIT",
-  "dependencies": {
-    "connect": "^2.14.5"
-  }
+  "license": "MIT"
 }
