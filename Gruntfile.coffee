@@ -96,11 +96,12 @@ module.exports = (grunt) ->
     watch:
       options:
         livereload: true
-        spawn: false
       coffee:
         files: ['src/**/*.coffee']
         tasks: ['coffee']
       less:
+        options:
+          livereload: false
         files: ['src/**/*.less']
         tasks: ['less']
       images:
