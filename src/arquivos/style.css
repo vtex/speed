@@ -3,6 +3,9 @@ body {
   padding-top: 20px;
   padding-bottom: 40px;
 }
+.container {
+    background-color: #fff;
+}
 
 h1,
 h2,
@@ -24,9 +27,6 @@ h6,
 }
 
 #ajaxBusy {display: none}
-.container {
-  background-color: #fff;
-}
 .masthead {
   padding: 10px 5px 0
 }

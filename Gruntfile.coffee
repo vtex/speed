@@ -107,8 +107,10 @@ module.exports = (grunt) ->
       images:
         files: ['src/**/*.{png,jpg,gif}']
         tasks: ['imagemin']
+      css:
+        files: ['build/**/*.css']
       main:
-        files: ['src/**/*.*']
+        files: ['src/**/*.html', 'src/**/*.js', 'src/**/*.css']
         tasks: ['copy']
       grunt:
         files: ['Gruntfile.coffee']
