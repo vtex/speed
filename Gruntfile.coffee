@@ -39,7 +39,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: 'src/'
-          src: ['main.less']
+          src: ['**/*.less']
           dest: "build/"
           ext: '.css'
         ]

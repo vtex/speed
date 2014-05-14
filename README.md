@@ -20,7 +20,7 @@ Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
     npm i
     grunt
 
-Your browser should automatically open here:  
+Open your browser here:  
 
 http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
 
