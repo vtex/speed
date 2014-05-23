@@ -84,7 +84,7 @@ module.exports = (grunt) ->
         options:
           hostname: "*"
           open: open
-          port: 80
+          port: process.env.PORT || 80
           middleware: [
             require('connect-livereload')({disableCompression: true})
             require('connect-http-please')(replaceHost: ((h) -> h.replace("vtexlocal", environment)), {verbose: verbose})

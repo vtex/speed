@@ -24,6 +24,8 @@ Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
     npm i
     grunt
 
+** Advanced: ** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 grunt`
+
 Open your browser here:  
 
 http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
