@@ -9,6 +9,7 @@
     "connect-livereload": "git://github.com/gadr/connect-livereload#7f4a0b7",
     "connect-tryfiles": "^0.2.1",
     "grunt": "~0.4.2",
+    "jpegtran-bin": "0.2.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "~0.8.0",
     "grunt-contrib-concat": "~0.3.0",
