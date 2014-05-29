@@ -5,7 +5,7 @@ VTEX Store development tools - reverse proxy, compilation, minification, optimiz
 
 ## Presentation - VTEX Day 2014
 
-Watch a portuguese about VTEX Speed here (pt-BR): http://gadr.github.io/presentations/vtex-day-2014/#/
+Watch a presentation about VTEX Speed here (pt-BR): http://gadr.github.io/presentations/vtex-day-2014/#/
 
 ## Install
 
