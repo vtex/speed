@@ -7,11 +7,21 @@ VTEX Store development tools - reverse proxy, compilation, minification, optimiz
 
 Watch a presentation about VTEX Speed here (pt-BR): http://gadr.github.io/presentations/vtex-day-2014/#/
 
+## Pre-requisites
+
+You must have Node.js installed on your machine. It runs on Windows, Mac and Linux, so no worries!  
+
+http://nodejs.org/
+
+After installing node, use `npm` to install the Grunt command line application.
+
+    npm install -g grunt-cli
+
 ## Install
 
 Clone this repo or download and unzip it.
 
-If you're on a UNIX system, this command downloads and unzips for you:
+If you're on a UNIX system, this command downloads and unzips for you automatically:
 
     wget -qO- -O vtex-speed.zip https://github.com/vtex/speed/archive/master.zip && unzip vtex-speed.zip && rm vtex-speed.zip
 
@@ -21,16 +31,16 @@ If you're on a UNIX system, this command downloads and unzips for you:
 Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
 
     cd speed
-    npm i
-    grunt
+    npm install
+    grunt --verbose
 
-** Advanced: ** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 grunt`
+**Advanced:** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 grunt`
 
 Open your browser here:  
 
 http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
 
-** Did you know? **  You can replace `basedevmkp` with the accountName of your store.
+**Did you know?**  You can replace `basedevmkp` with the accountName of your store.
 
 Now, copy a CSS file from that site over to your `src/` folder.
 We already have `src/arquivos/style.css` there as an example.
