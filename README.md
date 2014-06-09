@@ -21,11 +21,6 @@ After installing node, use `npm` to install the Grunt command line application.
 
 Clone this repo or download and unzip it.
 
-If you're on a UNIX system, this command downloads and unzips for you automatically:
-
-    wget -qO- -O vtex-speed.zip https://github.com/vtex/speed/archive/master.zip && unzip vtex-speed.zip && rm vtex-speed.zip
-
-
 ## Quick Start
 
 Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
