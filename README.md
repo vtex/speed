@@ -9,13 +9,14 @@ Watch a presentation about VTEX Speed here (pt-BR): http://gadr.github.io/presen
 
 ## Pre-requisites
 
-You must have Node.js installed on your machine. It runs on Windows, Mac and Linux, so no worries!  
-
-http://nodejs.org/
+* Node - http://nodejs.org/
+* Git - http://git-scm.com/
 
 After installing node, use `npm` to install the Grunt command line application.
 
     npm install -g grunt-cli
+    
+If you are using Windows, remember to put `git` on your PATH or use the git bash included in installation.
 
 ## Install
 
