@@ -1,7 +1,7 @@
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
-  environment = process.env.VTEX_HOST or 'vtexcommerce'
+  environment = process.env.VTEX_HOST or 'vtexcommercestable'
 
   verbose = grunt.option('verbose')
   
