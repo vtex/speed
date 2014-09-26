@@ -34,9 +34,9 @@ Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
 
 Open your browser here:  
 
-http://basedevmkp.vtexlocal.com.br/?debugcss=true&debugjs=true
+http://your-store-account-name.vtexlocal.com.br/?debugcss=true&debugjs=true
 
-**Did you know?**  You can replace `basedevmkp` with the accountName of your store.
+**Important**  You should replace `your-store-account-name` with the accountName of your store. Who would guess, huh?
 
 Now, copy a CSS file from that site over to your `src/` folder.
 We already have `src/arquivos/style.css` there as an example.
@@ -76,7 +76,7 @@ If you think there's a plugin that's great for everybody, why don't you [fork th
 
 If you want to open the same store every time, you can add an `accountName` property to your `package.json` file:
 
-    "accountName": "basedevmkp"
+    "accountName": "your-store-account-name"
 
 When `grunt` runs, this store will open automatically.  
 If you wish, you may delete that key and grunt will not open any address.
