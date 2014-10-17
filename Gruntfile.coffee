@@ -20,7 +20,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: 'src/'
-          src: ['**', '!**/*.coffee', '!**/*.less']
+          src: ['**', '!**/*.coffee', '!**/*.less', '!sprite/**/*']
           dest: "build/"
         ]
 
@@ -64,20 +64,20 @@ module.exports = (grunt) ->
           ext: '.min.js'
         }]
 
+    sprite:
+      all: 
+        src: 'src/sprite/*.png'
+        destImg: 'build/spritesheet.png'
+        destCSS: 'build/sprite.css'
+
     imagemin:
       main:
         files: [
           expand: true
-          cwd: 'src/'
+          cwd: 'build/'
           src: ['**/*.{png,jpg,gif}']
           dest: 'build/'
         ]
-
-    sprite:
-      all: 
-        src: 'src/sprite/*.png'
-        destImg: 'src/spritesheet.png'
-        destCSS: 'src/sprite.less'
 
     connect:
       http:
@@ -86,8 +86,17 @@ module.exports = (grunt) ->
           open: open
           port: process.env.PORT || 80
           middleware: [
+            (req, res, next) ->
+              end = res.end
+              res.end = (data, encoding) ->
+                if data
+                  data = data.replace(new RegExp(environment, "g"), "vtexlocal")
+                res.end = end
+                res.end data, encoding
+              next()
             require('connect-livereload')({disableCompression: true})
             require('connect-http-please')(replaceHost: ((h) -> h.replace("vtexlocal", environment)), {verbose: verbose})
+            (req, res, next) -> req.headers.host = req.headers.host.replace("vtexlocal", environment); next()
             require('connect-tryfiles')('**', "http://portal.#{environment}.com.br:80", {cwd: 'build/', verbose: verbose})
             require('connect').static('./build/')
             errorHandler
@@ -117,7 +126,7 @@ module.exports = (grunt) ->
 
   tasks =
     # Building block tasks
-    build: ['clean', 'sprite', 'copy:main', 'coffee', 'less', 'imagemin']
+    build: ['clean', 'copy:main', 'sprite', 'coffee', 'less', 'imagemin']
     min: ['uglify', 'cssmin'] # minifies files
     # Deploy tasks
     dist: ['build', 'min'] # Dist - minifies files
