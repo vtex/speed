@@ -32,7 +32,11 @@ Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
 
 **Advanced:** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 grunt`
 
-Open your browser here:  
+First, open your browser here to authenticate:  
+
+http://your-store-account-name.vtexlocal.com.br/admin/Site/Login.aspx
+
+Then, open a normal page, like your home:
 
 http://your-store-account-name.vtexlocal.com.br/?debugcss=true&debugjs=true
 
