@@ -5,7 +5,7 @@ VTEX Store development tools - reverse proxy, compilation, minification, optimiz
 
 ## Presentation - VTEX Day 2014
 
-Watch a presentation about VTEX Speed here (pt-BR): http://gadr.github.io/presentations/vtex-day-2014/#/
+Watch a presentation about VTEX Speed here (pt-BR): http://firstdoit.github.io/presentations/vtex-day-2014/#/
 
 ## Pre-requisites
 
@@ -23,6 +23,16 @@ If you are using Windows, remember to put `git` on your PATH or use the git bash
 Clone this repo or download and unzip it.
 
 ## Quick Start
+
+**Before continuing**, please add a `accountName` key to the `package.json` file. For example:
+
+    {
+      ...
+      "name": "vtex-speed",
+      "version": "2.0.0",
+      "accountName": "myStore",
+      ...
+    }
 
 Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
 
@@ -98,3 +108,7 @@ https://github.com/vtex/speed/issues
 The HTTP response socket hung up before sending a complete reply.  
 You probably manually stopped a request on your browser.  
 Thus, the proxy shouted: "I was receiving a response and it stopped abruptly!"
+
+## Release History
+
+- 2015-03-16    v2.0.0      Replace `connect-tryfiles` with `serve-static` and `proxy-middleware`, adding support to "vteximg" host proxying. Update deps. **Important:** `accountName` is now a required property in the `package.json` file.

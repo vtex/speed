@@ -1,16 +1,62 @@
+proxy = require('proxy-middleware')
+serveStatic = require('serve-static')
+httpPlease = require('connect-http-please')
+url = require('url')
+
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
+
+  accountName = process.env.VTEX_ACCOUNT or pkg.accountName or 'basedevmkp'
 
   environment = process.env.VTEX_HOST or 'vtexcommercestable'
 
   verbose = grunt.option('verbose')
   
-  open = if pkg.accountName then "http://#{pkg.accountName}.vtexlocal.com.br/?debugcss=true&debugjs=true" else undefined
-
-  errorHandler = (err, req, res, next) -> 
+  errorHandler = (err, req, res, next) ->
     errString = err.code?.red ? err.toString().red
     grunt.log.warn(errString, req.url.yellow)
-              
+
+  imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
+  imgProxyOptions.route = '/arquivos'
+
+  portalProxyOptions = url.parse("http://#{accountName}.#{environment}.com.br/")
+  portalProxyOptions.preserveHost = true
+
+  ignoreReplace = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
+                   /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/]
+
+  # Middleware that replaces vtexcommercestable and vteximg for vtexlocal
+  # This enables the same proxy to handle both domains and avoid adding rules to /etc/hosts
+  replaceHtmlBody = (req, res, next) ->
+    # Ignore requests to obvious non-HTML resources
+    return next() if ignoreReplace.some (ignore) -> ignore.test(req.url)
+
+    data = ''
+    write = res.write
+    end = res.end
+
+    res.write = (chunk) ->
+      data += chunk
+
+    res.end = (chunk, encoding) ->
+      if chunk
+        data += chunk
+
+      if data
+        data = data.replace(new RegExp(environment, "g"), "vtexlocal")
+        data = data.replace(new RegExp("vteximg", "g"), "vtexlocal")
+
+      # Restore res properties
+      res.write = write
+      res.end = end
+      res.end data, encoding
+
+    next()
+
+  disableCompression = (req, res, next) ->
+    req.headers['accept-encoding'] = 'identity'
+    next()
+
   config =
     clean:
       main: ['build']
@@ -67,8 +113,8 @@ module.exports = (grunt) ->
     sprite:
       all: 
         src: 'src/sprite/*.png'
-        destImg: 'build/spritesheet.png'
-        destCSS: 'build/sprite.css'
+        dest: 'build/spritesheet.png'
+        destCss: 'build/sprite.css'
 
     imagemin:
       main:
@@ -83,22 +129,15 @@ module.exports = (grunt) ->
       http:
         options:
           hostname: "*"
-          open: open
+          livereload: true
           port: process.env.PORT || 80
           middleware: [
-            (req, res, next) ->
-              end = res.end
-              res.end = (data, encoding) ->
-                if data
-                  data = data.replace(new RegExp(environment, "g"), "vtexlocal")
-                res.end = end
-                res.end data, encoding
-              next()
-            require('connect-livereload')({disableCompression: true})
-            require('connect-http-please')(replaceHost: ((h) -> h.replace("vtexlocal", environment)), {verbose: verbose})
-            (req, res, next) -> req.headers.host = req.headers.host.replace("vtexlocal", environment); next()
-            require('connect-tryfiles')('**', "http://portal.#{environment}.com.br:80", {cwd: 'build/', verbose: verbose})
-            require('connect').static('./build/')
+            disableCompression
+            replaceHtmlBody
+            httpPlease(replaceHost: ((h) -> h.replace("vtexlocal", environment)), {verbose: verbose})
+            serveStatic('./build')
+            proxy(imgProxyOptions)
+            proxy(portalProxyOptions)
             errorHandler
           ]
 
@@ -137,6 +176,11 @@ module.exports = (grunt) ->
              'connect:http:keepalive'] # Minifies files and serve
 
   # Project configuration.
-  grunt.initConfig config
-  grunt.loadNpmTasks name for name of pkg.devDependencies when name[0..5] is 'grunt-'
+  grunt.config.init config
+  if grunt.cli.tasks[0] is 'less'
+    grunt.loadNpmTasks 'grunt-contrib-less'
+  else if grunt.cli.tasks[0] is 'coffee'
+    grunt.loadNpmTasks 'grunt-contrib-coffee'
+  else
+    grunt.loadNpmTasks name for name of pkg.devDependencies when name[0..5] is 'grunt-'
   grunt.registerTask taskName, taskArray for taskName, taskArray of tasks
