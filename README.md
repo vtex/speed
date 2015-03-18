@@ -86,15 +86,6 @@ Go to http://gruntjs.com/plugins for a complete list.
 
 If you think there's a plugin that's great for everybody, why don't you [fork this repo and open a pull request](https://github.com/vtex/speed/fork)?
 
-## Advanced options
-
-If you want to open the same store every time, you can add an `accountName` property to your `package.json` file:
-
-    "accountName": "your-store-account-name"
-
-When `grunt` runs, this store will open automatically.  
-If you wish, you may delete that key and grunt will not open any address.
-
 ## Feedback
 
 We always want to hear you! Please report any problems to the issues page:
@@ -110,5 +101,7 @@ You probably manually stopped a request on your browser.
 Thus, the proxy shouted: "I was receiving a response and it stopped abruptly!"
 
 ## Release History
+
+- 2015-03-16    v2.1.0      Update connect-http-please, separate middlewares from Gruntfile
 
 - 2015-03-16    v2.0.0      Replace `connect-tryfiles` with `serve-static` and `proxy-middleware`, adding support to "vteximg" host proxying. Update deps. **Important:** `accountName` is now a required property in the `package.json` file.
