@@ -2,19 +2,16 @@ proxy = require('proxy-middleware')
 serveStatic = require('serve-static')
 httpPlease = require('connect-http-please')
 url = require('url')
+middlewares = require('./speed-middleware')
 
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
   accountName = process.env.VTEX_ACCOUNT or pkg.accountName or 'basedevmkp'
 
-  environment = process.env.VTEX_HOST or 'vtexcommercestable'
+  environment = process.env.VTEX_ENV or 'vtexcommercestable'
 
   verbose = grunt.option('verbose')
-  
-  errorHandler = (err, req, res, next) ->
-    errString = err.code?.red ? err.toString().red
-    grunt.log.warn(errString, req.url.yellow)
 
   imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
   imgProxyOptions.route = '/arquivos'
@@ -24,41 +21,6 @@ module.exports = (grunt) ->
   portalHost = "#{accountName}.#{environment}.com.br"
   portalProxyOptions = url.parse("http://#{portalHost}/")
   portalProxyOptions.preserveHost = true
-
-  ignoreReplace = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
-                   /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/]
-
-  # Middleware that replaces vtexcommercestable and vteximg for vtexlocal
-  # This enables the same proxy to handle both domains and avoid adding rules to /etc/hosts
-  replaceHtmlBody = (req, res, next) ->
-    # Ignore requests to obvious non-HTML resources
-    return next() if ignoreReplace.some (ignore) -> ignore.test(req.url)
-
-    data = ''
-    write = res.write
-    end = res.end
-
-    res.write = (chunk) ->
-      data += chunk
-
-    res.end = (chunk, encoding) ->
-      if chunk
-        data += chunk
-
-      if data
-        data = data.replace(new RegExp(environment, "g"), "vtexlocal")
-        data = data.replace(new RegExp("vteximg", "g"), "vtexlocal")
-
-      # Restore res properties
-      res.write = write
-      res.end = end
-      res.end data, encoding
-
-    next()
-
-  disableCompression = (req, res, next) ->
-    req.headers['accept-encoding'] = 'identity'
-    next()
 
   config =
     clean:
@@ -135,13 +97,13 @@ module.exports = (grunt) ->
           livereload: true
           port: process.env.PORT || 80
           middleware: [
-            disableCompression
-            replaceHtmlBody
+            middlewares.disableCompression
+            middlewares.replaceHtmlBody(environment)
             httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')
             proxy(imgProxyOptions)
             proxy(portalProxyOptions)
-            errorHandler
+            middlewares.errorHandler
           ]
 
     watch:
