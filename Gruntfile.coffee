@@ -19,7 +19,10 @@ module.exports = (grunt) ->
   imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
   imgProxyOptions.route = '/arquivos'
 
-  portalProxyOptions = url.parse("http://#{accountName}.#{environment}.com.br/")
+  # portalHost is also used by connect-http-please
+  # example: basedevmkp.vtexcommercestable.com.br
+  portalHost = "#{accountName}.#{environment}.com.br"
+  portalProxyOptions = url.parse("http://#{portalHost}/")
   portalProxyOptions.preserveHost = true
 
   ignoreReplace = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
@@ -134,7 +137,7 @@ module.exports = (grunt) ->
           middleware: [
             disableCompression
             replaceHtmlBody
-            httpPlease(replaceHost: ((h) -> h.replace("vtexlocal", environment)), {verbose: verbose})
+            httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')
             proxy(imgProxyOptions)
             proxy(portalProxyOptions)
