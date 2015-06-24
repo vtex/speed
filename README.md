@@ -30,11 +30,9 @@ Clone this repo or download and unzip it.
 
 ```json
     {
-      ...
       "name": "vtex-speed",
       "version": "2.0.0",
       "accountName": "myStore",
-      ...
     }
 ```
 
