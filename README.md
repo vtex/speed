@@ -1,5 +1,4 @@
-VTEX Speed
-=====
+# VTEX Speed
 
 VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!
 
