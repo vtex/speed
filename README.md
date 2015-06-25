@@ -13,7 +13,9 @@ Watch a presentation about VTEX Speed here (pt-BR): http://firstdoit.github.io/p
 
 After installing node, use `npm` to install the Grunt command line application.
 
+```shell
     npm install -g grunt-cli
+```
     
 If you are using Windows, remember to put `git` on your PATH or use the git bash included in installation.
 
@@ -25,19 +27,21 @@ Clone this repo or download and unzip it.
 
 **Before continuing**, please add a `accountName` key to the `package.json` file. For example:
 
+```json
     {
-      ...
       "name": "vtex-speed",
       "version": "2.0.0",
       "accountName": "myStore",
-      ...
     }
+```
 
 Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
 
+```shell
     cd speed
     npm install
     grunt --verbose
+```
 
 **Advanced:** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 grunt`
 
@@ -56,9 +60,11 @@ We already have `src/arquivos/style.css` there as an example.
 
 Go ahead and add a new rule to that file:
 
+```css
     body {
         background: black;
     }
+```
 
 Nice! Live Reload has reloaded that stylesheet for you.
 
