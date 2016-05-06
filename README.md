@@ -97,6 +97,8 @@ Thus, the proxy shouted: "I was receiving a response and it stopped abruptly!"
 
 ## Release History
 
+- 2016-05-06    v3.0.0      Update grunt to major 1 and other dependencies
+
 - 2015-03-16    v2.1.0      Update connect-http-please, separate middlewares from Gruntfile
 
 - 2015-03-16    v2.0.0      Replace `connect-tryfiles` with `serve-static` and `proxy-middleware`, adding support to "vteximg" host proxying. Update deps. **Important:** `accountName` is now a required property in the `package.json` file.
