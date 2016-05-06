@@ -9,15 +9,6 @@ Watch a presentation about VTEX Speed here (pt-BR): http://firstdoit.github.io/p
 ## Pre-requisites
 
 * Node - http://nodejs.org/
-* Git - http://git-scm.com/
-
-After installing node, use `npm` to install the Grunt command line application.
-
-```shell
-    npm install -g grunt-cli
-```
-    
-If you are using Windows, remember to put `git` on your PATH or use the git bash included in installation.
 
 ## Install
 
@@ -30,20 +21,19 @@ Clone this repo or download and unzip it.
 ```json
     {
       "name": "vtex-speed",
-      "version": "2.0.0",
       "accountName": "myStore",
     }
 ```
 
-Enter the folder you cloned or downloaded, install dependencies and run `grunt`:
+Enter the folder you cloned or downloaded, install dependencies and run `npm start`:
 
 ```shell
     cd speed
     npm install
-    grunt --verbose
+    npm start
 ```
 
-**Advanced:** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 grunt`
+**Advanced:** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 npm start`
 
 First, open your browser here to authenticate:  
 
