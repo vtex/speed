@@ -10,6 +10,13 @@ replaceHtmlBody = (environment) -> (req, res, next) ->
   data = ''
   write = res.write
   end = res.end
+  writeHead = res.writeHead
+  proxiedStatusCode = null
+  proxiedHeaders = null
+
+  res.writeHead = (statusCode, headers) ->
+    proxiedStatusCode = statusCode
+    proxiedHeaders = headers
 
   res.write = (chunk) ->
     data += chunk
@@ -25,6 +32,9 @@ replaceHtmlBody = (environment) -> (req, res, next) ->
     # Restore res properties
     res.write = write
     res.end = end
+    res.writeHead = writeHead
+    proxiedHeaders['content-length'] = Buffer.byteLength(data)
+    res.writeHead proxiedStatusCode, proxiedHeaders
     res.end data, encoding
 
   next()
