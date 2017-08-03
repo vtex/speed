@@ -33,8 +33,11 @@ replaceHtmlBody = (environment) -> (req, res, next) ->
     res.write = write
     res.end = end
     res.writeHead = writeHead
-    proxiedHeaders['content-length'] = Buffer.byteLength(data)
-    res.writeHead proxiedStatusCode, proxiedHeaders
+
+    if proxiedStatusCode and proxiedHeaders
+      proxiedHeaders['content-length'] = Buffer.byteLength(data)
+      res.writeHead proxiedStatusCode, proxiedHeaders
+
     res.end data, encoding
 
   next()
@@ -43,11 +46,26 @@ disableCompression = (req, res, next) ->
   req.headers['accept-encoding'] = 'identity'
   next()
 
+rewriteLocationHeader = (rewriteFn) -> (req, res, next) ->
+  writeHead = res.writeHead
+  res.writeHead = (statusCode, headers) ->
+    if headers and headers.location
+      headers.location = rewriteFn(headers.location)
+    res.writeHead = writeHead
+    res.writeHead(statusCode, headers)
+  next()
+
+replaceHost = (host) -> (req, res, next) ->
+  req.headers.host = host
+  next()
+
 errorHandler = (err, req, res, next) ->
   errString = err.code?.red ? err.toString().red
   console.log(errString, req.url.yellow)
 
 module.exports =
+  rewriteLocationHeader: rewriteLocationHeader
+  replaceHost: replaceHost
   replaceHtmlBody: replaceHtmlBody
   disableCompression: disableCompression
   errorHandler: errorHandler

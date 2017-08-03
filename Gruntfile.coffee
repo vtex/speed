@@ -22,6 +22,11 @@ module.exports = (grunt) ->
   portalProxyOptions = url.parse("http://#{portalHost}/")
   portalProxyOptions.preserveHost = true
 
+  rewriteLocation = (location) ->
+    return location
+      .replace('https:', 'http:')
+      .replace(environment, 'vtexlocal')
+
   config =
     clean:
       main: ['build']
@@ -98,6 +103,8 @@ module.exports = (grunt) ->
           port: process.env.PORT || 80
           middleware: [
             middlewares.disableCompression
+            middlewares.rewriteLocationHeader(rewriteLocation)
+            middlewares.replaceHost(portalHost)
             middlewares.replaceHtmlBody(environment)
             httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')

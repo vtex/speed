@@ -7,7 +7,7 @@
     "start": "grunt"
   },
   "devDependencies": {
-    "connect-http-please": "^0.2.0",
+    "connect-http-please": "^0.3.0",
     "grunt": "~1.0.1",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-coffee": "^1.0.0",
