@@ -3,7 +3,7 @@ ignoreReplace = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?
 
 # Middleware that replaces vtexcommercestable and vteximg for vtexlocal
 # This enables the same proxy to handle both domains and avoid adding rules to /etc/hosts
-replaceHtmlBody = (environment) -> (req, res, next) ->
+replaceHtmlBody = (environment, accountName, secureUrl) -> (req, res, next) ->
   # Ignore requests to obvious non-HTML resources
   return next() if ignoreReplace.some (ignore) -> ignore.test(req.url)
 
@@ -28,6 +28,8 @@ replaceHtmlBody = (environment) -> (req, res, next) ->
     if data
       data = data.replace(new RegExp(environment, "g"), "vtexlocal")
       data = data.replace(new RegExp("vteximg", "g"), "vtexlocal")
+      if secureUrl
+        data = data.replace(new RegExp("https:\/\/"+accountName, "g"), "http://"+accountName)
 
     # Restore res properties
     res.write = write
@@ -36,6 +38,8 @@ replaceHtmlBody = (environment) -> (req, res, next) ->
 
     if proxiedStatusCode and proxiedHeaders
       proxiedHeaders['content-length'] = Buffer.byteLength(data)
+      if secureUrl
+        delete proxiedHeaders['content-security-policy']
       res.writeHead proxiedStatusCode, proxiedHeaders
 
     res.end data, encoding
