@@ -10,16 +10,22 @@ module.exports = (grunt) ->
   accountName = process.env.VTEX_ACCOUNT or pkg.accountName or 'basedevmkp'
 
   environment = process.env.VTEX_ENV or 'vtexcommercestable'
+  
+  secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl
 
   verbose = grunt.option('verbose')
 
-  imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
+  if secureUrl
+    imgProxyOptions = url.parse("https://#{accountName}.vteximg.com.br/arquivos")
+  else 
+    imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
+
   imgProxyOptions.route = '/arquivos'
 
   # portalHost is also used by connect-http-please
   # example: basedevmkp.vtexcommercestable.com.br
   portalHost = "#{accountName}.#{environment}.com.br"
-  portalProxyOptions = url.parse("http://#{portalHost}/")
+  portalProxyOptions = url.parse("https://#{portalHost}/")
   portalProxyOptions.preserveHost = true
 
   rewriteLocation = (location) ->
@@ -105,7 +111,7 @@ module.exports = (grunt) ->
             middlewares.disableCompression
             middlewares.rewriteLocationHeader(rewriteLocation)
             middlewares.replaceHost(portalHost)
-            middlewares.replaceHtmlBody(environment)
+            middlewares.replaceHtmlBody(environment, accountName, secureUrl)
             httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')
             proxy(imgProxyOptions)
