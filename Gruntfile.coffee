@@ -15,7 +15,11 @@ module.exports = (grunt) ->
 
   verbose = grunt.option('verbose')
 
-  imgProxyOptions = url.parse("https://#{accountName}.vteximg.com.br/arquivos")
+  if secureUrl
+    imgProxyOptions = url.parse("https://#{accountName}.vteximg.com.br/arquivos")
+  else 
+    imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
+
   imgProxyOptions.route = '/arquivos'
 
   # portalHost is also used by connect-http-please
