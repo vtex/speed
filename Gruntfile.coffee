@@ -25,7 +25,10 @@ module.exports = (grunt) ->
   # portalHost is also used by connect-http-please
   # example: basedevmkp.vtexcommercestable.com.br
   portalHost = "#{accountName}.#{environment}.com.br"
-  portalProxyOptions = url.parse("https://#{portalHost}/")
+  if secureUrl
+    portalProxyOptions = url.parse("https://#{portalHost}/")
+  else
+    portalProxyOptions = url.parse("http://#{portalHost}/")
   portalProxyOptions.preserveHost = true
 
   rewriteLocation = (location) ->
