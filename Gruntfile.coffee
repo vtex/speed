@@ -30,6 +30,7 @@ module.exports = (grunt) ->
   else
     portalProxyOptions = url.parse("http://#{portalHost}/")
   portalProxyOptions.preserveHost = true
+  portalProxyOptions.cookieRewrite = "${accountName}.vtexlocal.com.br"
 
   rewriteLocation = (location) ->
     return location
