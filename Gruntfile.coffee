@@ -115,6 +115,7 @@ module.exports = (grunt) ->
             middlewares.disableCompression
             middlewares.rewriteLocationHeader(rewriteLocation)
             middlewares.replaceHost(portalHost)
+            middlewares.replaceReferer(portalHost)
             middlewares.replaceHtmlBody(environment, accountName, secureUrl)
             httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')

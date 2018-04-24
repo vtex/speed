@@ -63,6 +63,10 @@ replaceHost = (host) -> (req, res, next) ->
   req.headers.host = host
   next()
 
+replaceReferer = (host) -> (req, res, next) ->
+  req.headers.referer = host
+  next()
+
 errorHandler = (err, req, res, next) ->
   errString = err.code?.red ? err.toString().red
   console.log(errString, req.url.yellow)
@@ -71,5 +75,6 @@ module.exports =
   rewriteLocationHeader: rewriteLocationHeader
   replaceHost: replaceHost
   replaceHtmlBody: replaceHtmlBody
+  replaceReferer: replaceReferer
   disableCompression: disableCompression
   errorHandler: errorHandler
