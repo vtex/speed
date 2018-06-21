@@ -1,6 +1,6 @@
 {
   "name": "vtex-speed",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "secureUrl": true,
   "readmeFilename": "README.md",
   "description": "VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!",
