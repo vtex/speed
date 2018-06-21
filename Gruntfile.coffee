@@ -32,6 +32,12 @@ module.exports = (grunt) ->
   portalProxyOptions.preserveHost = true
   portalProxyOptions.cookieRewrite = "#{accountName}.vtexlocal.com.br"
 
+  rewriteReferer = (referer) ->
+    if secureUrl
+      referer = referer.replace('http:', 'https:')
+    return referer.replace('vtexlocal', environment)
+
+
   rewriteLocation = (location) ->
     return location
       .replace('https:', 'http:')
@@ -115,7 +121,7 @@ module.exports = (grunt) ->
             middlewares.disableCompression
             middlewares.rewriteLocationHeader(rewriteLocation)
             middlewares.replaceHost(portalHost)
-            middlewares.replaceReferer(portalHost)
+            middlewares.replaceReferer(rewriteReferer)
             middlewares.replaceHtmlBody(environment, accountName, secureUrl)
             httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')

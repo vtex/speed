@@ -63,8 +63,8 @@ replaceHost = (host) -> (req, res, next) ->
   req.headers.host = host
   next()
 
-replaceReferer = (host) -> (req, res, next) ->
-  req.headers.referer = host
+replaceReferer = (rewriteReferer) -> (req, res, next) ->
+  req.headers.referer = rewriteReferer(req.headers.referer)
   next()
 
 errorHandler = (err, req, res, next) ->
