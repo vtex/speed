@@ -32,7 +32,7 @@ module.exports = (grunt) ->
   portalProxyOptions.preserveHost = true
   portalProxyOptions.cookieRewrite = "#{accountName}.vtexlocal.com.br"
 
-  rewriteReferer = (referer) ->
+  rewriteReferer = (referer = '') ->
     if secureUrl
       referer = referer.replace('http:', 'https:')
     return referer.replace('vtexlocal', environment)
