@@ -25,6 +25,9 @@ module.exports = (grunt) ->
   # portalHost is also used by connect-http-please
   # example: basedevmkp.vtexcommercestable.com.br
   portalHost = "#{accountName}.#{environment}.com.br"
+  localHost = "#{accountName}.vtexlocal.com.br"
+  if port !== 80
+    localHost = "#{localHost}:#{port}"
   if secureUrl
     portalProxyOptions = url.parse("https://#{portalHost}/")
   else
@@ -35,13 +38,13 @@ module.exports = (grunt) ->
   rewriteReferer = (referer = '') ->
     if secureUrl
       referer = referer.replace('http:', 'https:')
-    return referer.replace('vtexlocal', environment)
+    return referer.replace(localHost, portalHost)
 
 
   rewriteLocation = (location) ->
     return location
       .replace('https:', 'http:')
-      .replace(environment, 'vtexlocal')
+      .replace(portalHost, localHost)
 
   config =
     clean:

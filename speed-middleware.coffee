@@ -1,6 +1,9 @@
 ignoreReplace = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
                  /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/]
 
+port = process.env.PORT || 80
+console.log('Proxy port: ' + port)
+
 # Middleware that replaces vtexcommercestable and vteximg for vtexlocal
 # This enables the same proxy to handle both domains and avoid adding rules to /etc/hosts
 replaceHtmlBody = (environment, accountName, secureUrl) -> (req, res, next) ->
@@ -30,7 +33,8 @@ replaceHtmlBody = (environment, accountName, secureUrl) -> (req, res, next) ->
       data = data.replace(new RegExp("vteximg", "g"), "vtexlocal")
       if secureUrl
         data = data.replace(new RegExp("https:\/\/"+accountName, "g"), "http://"+accountName)
-
+    if port != 80
+      data = data.replace(new RegExp("vtexlocal.com.br\/", "g"), "vtexlocal.com.br:#{port}\/")
     # Restore res properties
     res.write = write
     res.end = end
