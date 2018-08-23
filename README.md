@@ -9,6 +9,7 @@ Watch a presentation about VTEX Speed here (pt-BR): http://firstdoit.github.io/p
 ## Pre-requisites
 
 * Node - http://nodejs.org/
+* Grunt - https://gruntjs.com/
 
 ## Install
 
@@ -16,12 +17,12 @@ Clone this repo or download and unzip it.
 
 ## Quick Start
 
-**Before continuing**, please add a `accountName` key to the `package.json` file. For example:
+**Before continuing**, please edit the `accountName` key to the `package.json` file. For example:
 
 ```json
     {
       "name": "vtex-speed",
-      "accountName": "myStore",
+      "accountName": "your-store-account-name",
     }
 ```
 
@@ -45,16 +46,6 @@ http://your-store-account-name.vtexlocal.com.br/?debugcss=true&debugjs=true
 
 **Important**  You should replace `your-store-account-name` with the accountName of your store. Who would guess, huh?
 
-Now, copy a CSS file from that site over to your `src/` folder.
-We already have `src/arquivos/style.css` there as an example.
-
-Go ahead and add a new rule to that file:
-
-```css
-    body {
-        background: black;
-    }
-```
 
 Nice! Live Reload has reloaded that stylesheet for you.
 
@@ -69,9 +60,68 @@ Currently supported:
 - LiveReload of assets in HTTP and HTTPS
 - Coffee compilation
 - LESS compilation
+- SASS compilation
 - JS and CSS Minification
+- Optimize Images
+- Create Icons SpriteSheet
+
+To optimize your images before uploading them to vtex, simply put your image files into src/Images directory.
+To create spritesheets for your icons by putting your icons png files into the src/sprite directory. Then you can use render your icons by using the class icon-<filename>
+To develop Javascript, simply insert your javascript files into src/Scripts directory.
 
 But, hey, there's more!
+
+### Files reverse proxy
+
+You can use vtex speed to just replace the files in your store while developing, simply put your files into src/ReverProxy directory
+
+### CSS 
+
+To develop your store styles with raw css styles, you should simply white your css code into the folder src/Styles/css. 
+Then run one of this commands:
+`````bash
+$ npm start
+$ npm run css-min     # minimize the result css and js files on dev time
+$ grunt
+$ grunt --compress   # minimize the result css and js files on dev time
+`````
+
+### SASS 
+ 
+To develop your store styles using sass, you should simply white your sass code into the folder src/Styles/sass. 
+Then run one of this commands:
+`````bash
+$ npm run sass
+$ npm run sass-min     # minimize the result css and js files on dev time
+$ grunt --sass
+$ grunt --sass --compress   # minimize the result css and js files on dev time
+`````
+
+**Attention** To include npm libraries you can use the tilde syntax. For example:
+```css
+/** 
+    To import bootstrap 4 sass source
+*/
+@import "~bootstrap/scss/bootstrap.scss";
+```
+
+### LESS 
+ 
+To develop your store styles using less, you should simply white your less code into the folder src/Styles/less. 
+Then run one of this commands:
+`````bash
+$ npm run less
+$ npm run less-min     # minimize the result css and js files on dev time
+$ grunt --less
+$ grunt --less --compress   # minimize the result css and js files on dev time
+`````
+**Attention** To include npm libraries you can use the tilde syntax. For example:
+```css
+/** 
+    To import bootstrap 3 less source.
+*/
+@import "~bootstrap/less/bootstrap.less";
+```
 
 ## Discover new Grunt plugins
 
