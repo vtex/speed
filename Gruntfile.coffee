@@ -3,6 +3,7 @@ serveStatic = require('serve-static')
 httpPlease = require('connect-http-please')
 url = require('url')
 middlewares = require('./speed-middleware')
+sass = require('node-sass')
 
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
@@ -13,6 +14,8 @@ module.exports = (grunt) ->
   
   secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl
 
+  port = process.env.PORT || 80
+  
   verbose = grunt.option('verbose')
 
   if secureUrl
@@ -26,8 +29,9 @@ module.exports = (grunt) ->
   # example: basedevmkp.vtexcommercestable.com.br
   portalHost = "#{accountName}.#{environment}.com.br"
   localHost = "#{accountName}.vtexlocal.com.br"
-  if port !== 80
+  if port != 80
     localHost = "#{localHost}:#{port}"
+  
   if secureUrl
     portalProxyOptions = url.parse("https://#{portalHost}/")
   else
@@ -49,69 +53,112 @@ module.exports = (grunt) ->
   config =
     clean:
       main: ['build']
-
+  
     copy:
       main:
         files: [
           expand: true
-          cwd: 'src/'
-          src: ['**', '!**/*.coffee', '!**/*.less', '!sprite/**/*']
-          dest: "build/"
+          cwd: 'src/arquivos'
+          src: ['**/*']
+          dest: 'build/arquivos/'
+        ]
+      js:
+        files: [
+          expand: true
+          cwd: 'src/Scripts/js'
+          src: ['**/*.js']
+          dest: 'build/arquivos/'
+        ]
+      css:
+        files: [
+          expand: true
+          cwd: 'src/css'
+          src: ['**/*.css']
+          dest: 'build/arquivos/'
         ]
 
     coffee:
       main:
         files: [
           expand: true
-          cwd: 'src/'
+          cwd: 'src/Scripts/coffee/'
           src: ['**/*.coffee']
-          dest: "build/"
+          dest: 'build/arquivos/'
           ext: '.js'
         ]
 
-    less:
-      main:
+    sass:
+      compile:
+        options:
+          implementation: sass
+          sourceMap: false
+          includePaths: [
+            'node_modules'
+          ]
         files: [
           expand: true
-          cwd: 'src/'
-          src: ['**/*.less']
-          dest: "build/"
+          cwd: 'src/sass/'
+          src: ['*.scss']
+          dest: 'build/arquivos/'
           ext: '.css'
         ]
-
+      min:
+        options:
+          implementation: sass
+          sourceMap: true
+          includePaths: [
+            'node_modules'
+          ]
+          outputStyle: 'compressed'
+          sourceMapRoot: '../src/sass/'
+        files: [
+          expand: true
+          cwd: 'src/sass/'
+          src: ['*.scss']
+          dest: 'build/arquivos/'
+          ext: '.min.css'
+        ]
+  
     cssmin:
       main:
         expand: true
-        cwd: 'build/'
-        src: ['*.css', '!*.min.css']
-        dest: 'build/'
+        cwd: 'src/css'
+        src: ['**/*.css', '!**/*.min.css']
+        dest: 'build/arquivos'
         ext: '.min.css'
 
     uglify:
       options:
-        mangle: false
+        sourceMap: 
+          root: '../../src/Scripts/js/'
+        mangle: 
+          reserved: [
+            'jQuery'
+          ]
+        compress:
+          drop_console: true
       main:
         files: [{
           expand: true
-          cwd: 'build/'
+          cwd: 'build/arquivos/'
           src: ['*.js', '!*.min.js']
-          dest: 'build/'
+          dest: 'build/arquivos/'
           ext: '.min.js'
         }]
 
     sprite:
       all: 
         src: 'src/sprite/*.png'
-        dest: 'build/spritesheet.png'
-        destCss: 'build/sprite.css'
+        dest: 'build/arquivos/spritesheet.png'
+        destCss: 'build/arquivos/sprite.css'
 
     imagemin:
       main:
         files: [
           expand: true
-          cwd: 'build/'
+          cwd: 'src/img/'
           src: ['**/*.{png,jpg,gif}']
-          dest: 'build/'
+          dest: 'build/arquivos/'
         ]
 
     connect:
@@ -137,28 +184,34 @@ module.exports = (grunt) ->
       options:
         livereload: true
       coffee:
-        files: ['src/**/*.coffee']
+        files: ['src/coffee/**/*.coffee']
         tasks: ['coffee']
-      less:
+      sass:
+        files: ['src/sass/**/*.scss']
+        tasks: ['sass:compile']
+      images:
         options:
           livereload: false
-        files: ['src/**/*.less']
-        tasks: ['less']
-      images:
         files: ['src/**/*.{png,jpg,gif}']
         tasks: ['imagemin']
       css:
-        files: ['build/**/*.css']
+        files: ['src/css/**/*.css']
+        tasks: ['copy:css']
+      js:
+        files: ['src/Scripts/js/**/*.js']
+        tasks: ['copy:js']
       main:
-        files: ['src/**/*.html', 'src/**/*.js', 'src/**/*.css']
-        tasks: ['copy']
+        options:
+          livereload: false
+        files: ['src/arquivos/**/*']
+        tasks: ['copy:main']
       grunt:
         files: ['Gruntfile.coffee']
 
   tasks =
     # Building block tasks
-    build: ['clean', 'copy:main', 'sprite', 'coffee', 'less', 'imagemin']
-    min: ['uglify', 'cssmin'] # minifies files
+    build: ['clean', 'copy:main', 'copy:js', 'copy:css', 'sprite', 'coffee', 'sass:compile', 'imagemin']
+    min: ['uglify', 'sass:min', 'cssmin'] # minifies files
     # Deploy tasks
     dist: ['build', 'min'] # Dist - minifies files
     test: []
@@ -169,9 +222,7 @@ module.exports = (grunt) ->
 
   # Project configuration.
   grunt.config.init config
-  if grunt.cli.tasks[0] is 'less'
-    grunt.loadNpmTasks 'grunt-contrib-less'
-  else if grunt.cli.tasks[0] is 'coffee'
+  if grunt.cli.tasks[0] is 'coffee'
     grunt.loadNpmTasks 'grunt-contrib-coffee'
   else
     grunt.loadNpmTasks name for name of pkg.devDependencies when name[0..5] is 'grunt-'
