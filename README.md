@@ -71,13 +71,10 @@ To develop Javascript, simply insert your javascript files into src/Scripts dire
 
 But, hey, there's more!
 
----
-
 ### Files reverse proxy
 
 You can use vtex speed to just replace the files in your store while developing, simply put your files into src/ReverProxy directory
 
----
 ### CSS 
 
 To develop your store styles with raw css styles, you should simply white your css code into the folder src/Styles/css. 
@@ -89,7 +86,6 @@ $ grunt
 $ grunt --compress   # minimize the result css and js files on dev time
 `````
 
----
 ### SASS 
  
 To develop your store styles using sass, you should simply white your sass code into the folder src/Styles/sass. 
@@ -102,9 +98,6 @@ $ grunt --sass --compress   # minimize the result css and js files on dev time
 `````
 
 **Attention** To include npm libraries you can use the tilde syntax. For example:
-```bash
-$ npm install --save bootstrap@">=4.0"
-```
 ```css
 /** 
     To import bootstrap 4 sass source
@@ -112,7 +105,6 @@ $ npm install --save bootstrap@">=4.0"
 @import "~bootstrap/scss/bootstrap.scss";
 ```
 
----
 ### LESS 
  
 To develop your store styles using less, you should simply white your less code into the folder src/Styles/less. 
@@ -124,9 +116,6 @@ $ grunt --less
 $ grunt --less --compress   # minimize the result css and js files on dev time
 `````
 **Attention** To include npm libraries you can use the tilde syntax. For example:
-```bash
-$ npm install --save bootstrap@">=3.0 <4.0"
-```
 ```css
 /** 
     To import bootstrap 3 less source.
@@ -134,7 +123,6 @@ $ npm install --save bootstrap@">=3.0 <4.0"
 @import "~bootstrap/less/bootstrap.less";
 ```
 
----
 ## Discover new Grunt plugins
 
 There are a **ton** of available Grunt plugins for your every need.

@@ -16,6 +16,8 @@ module.exports = (grunt) ->
   
   secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl
 
+  port = process.env.PORT || 80
+
   useLess = grunt.option('less')
   useSass = grunt.option('sass')
   useCompress = grunt.option('compress')
@@ -33,7 +35,6 @@ module.exports = (grunt) ->
   # example: basedevmkp.vtexcommercestable.com.br
   portalHost = "#{accountName}.#{environment}.com.br"
   localHost = "#{accountName}.vtexlocal.com.br"
-  port = process.env.PORT || 80
   if port isnt 80
     localHost = "#{localHost}:#{port}"
   
