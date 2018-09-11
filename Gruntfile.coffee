@@ -11,17 +11,11 @@ module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
   accountName = process.env.VTEX_ACCOUNT or pkg.accountName or 'basedevmkp'
+  environment = process.env.VTEX_ENV or pkg.env or 'vtexcommercestable'
+  secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl or true
+  port = process.env.PORT or pkg.port or 80
 
-  environment = process.env.VTEX_ENV or 'vtexcommercestable'
-  
-  secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl
-
-  port = process.env.PORT || 80
-
-  useLess = grunt.option('less')
-  useSass = grunt.option('sass')
-  useCompress = grunt.option('compress')
-  
+  compress = grunt.option('compress')
   verbose = grunt.option('verbose')
 
   if secureUrl
@@ -35,13 +29,15 @@ module.exports = (grunt) ->
   # example: basedevmkp.vtexcommercestable.com.br
   portalHost = "#{accountName}.#{environment}.com.br"
   localHost = "#{accountName}.vtexlocal.com.br"
+
   if port isnt 80
-    localHost = "#{localHost}:#{port}"
+    localHost += ":#{port}"
   
   if secureUrl
     portalProxyOptions = url.parse("https://#{portalHost}/")
   else
     portalProxyOptions = url.parse("http://#{portalHost}/")
+
   portalProxyOptions.preserveHost = true
   portalProxyOptions.cookieRewrite = "#{accountName}.vtexlocal.com.br"
 
@@ -61,24 +57,24 @@ module.exports = (grunt) ->
       main: ['build']
   
     copy:
-      main:
+      html:
         files: [
           expand: true
-          cwd: 'src/ReverseProxy'
-          src: ['**/*']
-          dest: 'build/arquivos/'
+          cwd: 'src/'
+          src: ['**/*.html']
+          dest: 'build/'
         ]
       js:
         files: [
           expand: true
-          cwd: 'src/Scripts'
+          cwd: 'src/'
           src: ['**/*.js']
           dest: 'build/arquivos/'
         ]
       css:
         files: [
           expand: true
-          cwd: 'src/Styles/css'
+          cwd: 'src/'
           src: ['**/*.css']
           dest: 'build/arquivos/'
         ]
@@ -87,7 +83,7 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
-          cwd: 'src/Scripts/coffee/'
+          cwd: 'src/'
           src: ['**/*.coffee']
           dest: 'build/arquivos/'
           ext: '.js'
@@ -101,7 +97,7 @@ module.exports = (grunt) ->
           importer: tildeImporter
         files: [
           expand: true
-          cwd: 'src/Styles/sass/'
+          cwd: 'src/'
           src: ['**/*.scss']
           dest: 'build/arquivos/'
           ext: '.css'
@@ -112,10 +108,10 @@ module.exports = (grunt) ->
           sourceMap: true
           importer: tildeImporter
           outputStyle: 'compressed'
-          sourceMapRoot: '../src/Styles/sass/'
+          sourceMapRoot: '../src/'
         files: [
           expand: true
-          cwd: 'src/Styles/sass/'
+          cwd: 'src/'
           src: ['**/*.scss']
           dest: 'build/arquivos/'
           ext: '.min.css'
@@ -125,24 +121,24 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
-          cwd: 'src/Styles/less'
+          cwd: 'src/'
           src: ['**/*.less']
-          dest: "build/"
+          dest: "build/arquivos/"
           ext: '.css'
         ]
 
     cssmin:
       main:
         expand: true
-        cwd: 'src/Styles/css'
+        cwd: 'src/'
         src: ['**/*.css', '!**/*.min.css']
-        dest: 'build/arquivos'
+        dest: 'build/arquivos/'
         ext: '.min.css'
 
     uglify:
       options:
         sourceMap: 
-          root: '../../src/Scripts/'
+          root: '../../src/'
         mangle: 
           reserved: [
             'jQuery'
@@ -152,7 +148,7 @@ module.exports = (grunt) ->
       main:
         files: [{
           expand: true
-          cwd: 'src/Scripts/'
+          cwd: 'build/'
           src: ['**/*.js', '!**/*.min.js']
           dest: 'build/arquivos/'
           ext: '.min.js'
@@ -168,9 +164,9 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
-          cwd: 'src/Images/'
+          cwd: 'build/'
           src: ['**/*.{png,jpg,gif}']
-          dest: 'build/arquivos/'
+          dest: 'build/'
         ]
 
     connect:
@@ -196,12 +192,12 @@ module.exports = (grunt) ->
       options:
         livereload: true
       coffee:
-        files: ['src/Scripts/coffee/**/*.coffee']
+        files: ['src/**/*.coffee']
         tasks: ['coffee']
       images:
         options:
           livereload: false
-        files: ['src/Images/**/*.{png,jpg,gif}']
+        files: ['src/**/*.{png,jpg,gif}']
         tasks: ['imagemin']
       sprite:
         options:
@@ -209,59 +205,39 @@ module.exports = (grunt) ->
         files: ['src/sprite/**/*.png']
         tasks: ['sprite']
       css:
-        files: ['src/Styles/css/**/*.css']
+        files: ['src/**/*.css']
         tasks: ['copy:css']
+      sass:
+        files: ['src/**/*.scss']
+        tasks: ['sass:compile']
+      less:
+        files: ['src/**/*.less']
+        tasks: ['less']
+      html:
+        files: ['src/**/*.html']
+        tasks: ['copy:html']
       js:
-        files: ['src/Scripts/**/*.js']
+        files: ['src/**/*.js']
         tasks: ['copy:js']
-      main:
-        options:
-          livereload: false
-        files: ['src/ReverseProxy/**/*']
-        tasks: ['copy:main']
       grunt:
         files: ['Gruntfile.coffee']
 
   tasks =
     # Building block tasks
-    build: ['clean', 'copy:main', 'copy:js', 'copy:css', 'sprite', 'coffee', 'imagemin']
-    min: ['uglify', 'cssmin'] # minifies files
+    build: ['clean', 'copy:js', 'copy:css', 'copy:html', 'sprite', 'coffee', 'less', 'sass:compile', 'imagemin']
+    min: ['uglify', 'cssmin', 'sass:min'] # minifies files
     # Deploy tasks
     dist: ['build', 'min'] # Dist - minifies files
     test: []
     # Development tasks
     default: ['build', 'connect', 'watch']
-    devmin: ['build', 'min',
-             'connect:http:keepalive'] # Minifies files and serve
 
-
-  if useLess
-    tasks.build.push 'less:main'
-    # tasks.min.push 'less:min'
-    config.watch.less =
-      files: ['src/Styles/less/**/*.less']
-      tasks: ['less']
-  
-  if useSass
-    tasks.build.push 'sass:compile'
-    tasks.min.push 'sass:min'
-    config.watch.sass = 
-      files: ['src/Styles/sass/**/*.scss']
-      tasks: ['sass:compile']
-
-  if useCompress
+  if compress
     tasks.build.push 'min'
     config.watch.js.tasks.push 'uglify'
-    if useSass
-      config.watch.sass.tasks.push 'sass:min'
+    config.watch.sass.tasks.push 'sass:min'
 
   # Project configuration.
   grunt.config.init config
-
-  if grunt.cli.tasks[0] is 'less'
-    grunt.loadNpmTasks 'grunt-contrib-less'
-  else if grunt.cli.tasks[0] is 'coffee'
-    grunt.loadNpmTasks 'grunt-contrib-coffee'
-  else
-    grunt.loadNpmTasks name for name of pkg.devDependencies when name[0..5] is 'grunt-'
+  grunt.loadNpmTasks name for name of pkg.devDependencies when name[0..5] is 'grunt-'
   grunt.registerTask taskName, taskArray for taskName, taskArray of tasks

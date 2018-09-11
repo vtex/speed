@@ -34,8 +34,6 @@ Enter the folder you cloned or downloaded, install dependencies and run `npm sta
     npm start
 ```
 
-**Advanced:** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 npm start`
-
 First, open your browser here to authenticate:  
 
 http://your-store-account-name.vtexlocal.com.br/admin/Site/Login.aspx
@@ -65,63 +63,23 @@ Currently supported:
 - Optimize Images
 - Create Icons SpriteSheet
 
-To optimize your images before uploading them to vtex, simply put your image files into src/Images directory.
-To create spritesheets for your icons by putting your icons png files into the src/sprite directory. Then you can use render your icons by using the class icon-<filename>
-To develop Javascript, simply insert your javascript files into src/Scripts directory.
+Check the `src/` directory for examples.
 
-But, hey, there's more!
+### Spritesheets
 
-### Files reverse proxy
+To create spritesheets for your icons by putting your icons png files into the src/sprite directory. Then you can use render your icons by using the class icon-<filename>.
 
-You can use vtex speed to just replace the files in your store while developing, simply put your files into src/ReverProxy directory
+### Pages reverse proxy
 
-### CSS 
+You can use VTEX Speed serve HTML pages while developing, simply put your HTML files inside `src/` directory. You can see example page [http://your-store-account-name.vtexlocal.com.br/page-example/](http://your-store-account-name.vtexlocal.com.br/page-example/).
 
-To develop your store styles with raw css styles, you should simply white your css code into the folder src/Styles/css. 
-Then run one of this commands:
-`````bash
-$ npm start
-$ npm run css-min     # minimize the result css and js files on dev time
-$ grunt
-$ grunt --compress   # minimize the result css and js files on dev time
-`````
+### Compress option
 
-### SASS 
- 
-To develop your store styles using sass, you should simply white your sass code into the folder src/Styles/sass. 
-Then run one of this commands:
-`````bash
-$ npm run sass
-$ npm run sass-min     # minimize the result css and js files on dev time
-$ grunt --sass
-$ grunt --sass --compress   # minimize the result css and js files on dev time
-`````
+You can use the flag `--compress` to develop with minified files (JS, CSS, and SASS).
 
-**Attention** To include npm libraries you can use the tilde syntax. For example:
-```css
-/** 
-    To import bootstrap 4 sass source
-*/
-@import "~bootstrap/scss/bootstrap.scss";
-```
+### Changing default port
 
-### LESS 
- 
-To develop your store styles using less, you should simply white your less code into the folder src/Styles/less. 
-Then run one of this commands:
-`````bash
-$ npm run less
-$ npm run less-min     # minimize the result css and js files on dev time
-$ grunt --less
-$ grunt --less --compress   # minimize the result css and js files on dev time
-`````
-**Attention** To include npm libraries you can use the tilde syntax. For example:
-```css
-/** 
-    To import bootstrap 3 less source.
-*/
-@import "~bootstrap/less/bootstrap.less";
-```
+You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 npm start`
 
 ## Discover new Grunt plugins
 
@@ -146,6 +104,8 @@ You probably manually stopped a request on your browser.
 Thus, the proxy shouted: "I was receiving a response and it stopped abruptly!"
 
 ## Release History
+
+- 2018-09-11    v5.0.0      Add compress option. Allow to use another port. Add support for SASS.
 
 - 2016-05-06    v3.0.0      Update grunt to major 1 and other dependencies
 

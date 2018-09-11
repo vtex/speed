@@ -1,7 +1,7 @@
 {
   "name": "vtex-speed",
-  "accountName": "myStore",
-  "version": "4.0.1",
+  "accountName": "CHANGEME",
+  "version": "5.0.0",
   "secureUrl": true,
   "readmeFilename": "README.md",
   "description": "VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!",
@@ -17,7 +17,7 @@
     "connect-http-please": "^0.3.0",
     "grunt": "~1.0.1",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-coffee": "^2.0.0",
+    "grunt-contrib-coffee": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-copy": "^1.0.0",
