@@ -9,6 +9,7 @@ Watch a presentation about VTEX Speed here (pt-BR): http://firstdoit.github.io/p
 ## Pre-requisites
 
 * Node - http://nodejs.org/
+* Grunt - https://gruntjs.com/
 
 ## Install
 
@@ -16,12 +17,12 @@ Clone this repo or download and unzip it.
 
 ## Quick Start
 
-**Before continuing**, please add a `accountName` key to the `package.json` file. For example:
+**Before continuing**, please edit the `accountName` key to the `package.json` file. For example:
 
 ```json
     {
       "name": "vtex-speed",
-      "accountName": "myStore",
+      "accountName": "your-store-account-name",
     }
 ```
 
@@ -33,8 +34,6 @@ Enter the folder you cloned or downloaded, install dependencies and run `npm sta
     npm start
 ```
 
-**Advanced:** You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 npm start`
-
 First, open your browser here to authenticate:  
 
 http://your-store-account-name.vtexlocal.com.br/admin/Site/Login.aspx
@@ -45,16 +44,6 @@ http://your-store-account-name.vtexlocal.com.br/?debugcss=true&debugjs=true
 
 **Important**  You should replace `your-store-account-name` with the accountName of your store. Who would guess, huh?
 
-Now, copy a CSS file from that site over to your `src/` folder.
-We already have `src/arquivos/style.css` there as an example.
-
-Go ahead and add a new rule to that file:
-
-```css
-    body {
-        background: black;
-    }
-```
 
 Nice! Live Reload has reloaded that stylesheet for you.
 
@@ -69,9 +58,28 @@ Currently supported:
 - LiveReload of assets in HTTP and HTTPS
 - Coffee compilation
 - LESS compilation
+- SASS compilation
 - JS and CSS Minification
+- Optimize Images
+- Create Icons SpriteSheet
 
-But, hey, there's more!
+Check the `src/` directory for examples.
+
+### Spritesheets
+
+To create spritesheets for your icons by putting your icons png files into the src/sprite directory. Then you can use render your icons by using the class icon-<filename>.
+
+### Pages reverse proxy
+
+You can use VTEX Speed serve HTML pages while developing, simply put your HTML files inside `src/` directory. You can see example page [http://your-store-account-name.vtexlocal.com.br/page-example/](http://your-store-account-name.vtexlocal.com.br/page-example/).
+
+### Compress option
+
+You can use the flag `--compress` to develop with minified files (JS, CSS, and SASS).
+
+### Changing default port
+
+You can easily change the proxy port by setting the PORT environment variable, e.g. `PORT=9000 npm start`
 
 ## Discover new Grunt plugins
 
@@ -96,6 +104,8 @@ You probably manually stopped a request on your browser.
 Thus, the proxy shouted: "I was receiving a response and it stopped abruptly!"
 
 ## Release History
+
+- 2018-09-11    v5.0.0      Add compress option. Allow to use another port. Add support for SASS.
 
 - 2016-05-06    v3.0.0      Update grunt to major 1 and other dependencies
 
