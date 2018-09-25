@@ -20,7 +20,7 @@ module.exports = (grunt) ->
 
   if secureUrl
     imgProxyOptions = url.parse("https://#{accountName}.vteximg.com.br/arquivos")
-  else 
+  else
     imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
 
   imgProxyOptions.route = '/arquivos'
@@ -32,7 +32,7 @@ module.exports = (grunt) ->
 
   if port isnt 80
     localHost += ":#{port}"
-  
+
   if secureUrl
     portalProxyOptions = url.parse("https://#{portalHost}/")
   else
@@ -55,7 +55,7 @@ module.exports = (grunt) ->
   config =
     clean:
       main: ['build']
-  
+
     copy:
       html:
         files: [
@@ -67,6 +67,7 @@ module.exports = (grunt) ->
       js:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.js']
           dest: 'build/arquivos/'
@@ -74,6 +75,7 @@ module.exports = (grunt) ->
       css:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.css']
           dest: 'build/arquivos/'
@@ -83,6 +85,7 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.coffee']
           dest: 'build/arquivos/'
@@ -97,6 +100,7 @@ module.exports = (grunt) ->
           importer: tildeImporter
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.scss']
           dest: 'build/arquivos/'
@@ -111,6 +115,7 @@ module.exports = (grunt) ->
           sourceMapRoot: '../src/'
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.scss']
           dest: 'build/arquivos/'
@@ -121,6 +126,7 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.less']
           dest: "build/arquivos/"
@@ -130,6 +136,7 @@ module.exports = (grunt) ->
     cssmin:
       main:
         expand: true
+        flatten: true
         cwd: 'src/'
         src: ['**/*.css', '!**/*.min.css']
         dest: 'build/arquivos/'
@@ -137,9 +144,9 @@ module.exports = (grunt) ->
 
     uglify:
       options:
-        sourceMap: 
+        sourceMap:
           root: '../../src/'
-        mangle: 
+        mangle:
           reserved: [
             'jQuery'
           ]
@@ -155,7 +162,7 @@ module.exports = (grunt) ->
         }]
 
     sprite:
-      all: 
+      all:
         src: 'src/sprite/*.png'
         dest: 'build/arquivos/spritesheet.png'
         destCss: 'build/arquivos/sprite.css'
@@ -164,9 +171,10 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
-          cwd: 'build/'
-          src: ['**/*.{png,jpg,gif}']
-          dest: 'build/'
+          flatten: true
+          cwd: 'src/'
+          src: ['**/*.{png,jpg,gif}', '!sprite/**']
+          dest: 'build/arquivos/'
         ]
 
     connect:
