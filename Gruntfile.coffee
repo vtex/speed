@@ -69,6 +69,7 @@ module.exports = (grunt) ->
       js:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.js']
           dest: 'build/arquivos/'
@@ -76,6 +77,7 @@ module.exports = (grunt) ->
       css:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.css']
           dest: 'build/arquivos/'
@@ -85,6 +87,7 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.coffee']
           dest: 'build/arquivos/'
@@ -99,6 +102,7 @@ module.exports = (grunt) ->
           importer: tildeImporter
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.scss']
           dest: 'build/arquivos/'
@@ -113,6 +117,7 @@ module.exports = (grunt) ->
           sourceMapRoot: '../src/'
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.scss']
           dest: 'build/arquivos/'
@@ -123,6 +128,7 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
+          flatten: true
           cwd: 'src/'
           src: ['**/*.less']
           dest: "build/arquivos/"
@@ -132,6 +138,7 @@ module.exports = (grunt) ->
     cssmin:
       main:
         expand: true
+        flatten: true
         cwd: 'src/'
         src: ['**/*.css', '!**/*.min.css']
         dest: 'build/arquivos/'
@@ -150,6 +157,7 @@ module.exports = (grunt) ->
       main:
         files: [{
           expand: true
+          flatten: true
           cwd: 'build/'
           src: ['**/*.js', '!**/*.min.js']
           dest: 'build/arquivos/'
@@ -166,6 +174,7 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true
+          flatten: true
           cwd: 'build/'
           src: ['**/*.{png,jpg,gif}']
           dest: 'build/'
