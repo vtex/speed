@@ -175,9 +175,9 @@ module.exports = (grunt) ->
         files: [
           expand: true
           flatten: true
-          cwd: 'build/'
+          cwd: 'src/'
           src: ['**/*.{png,jpg,gif}']
-          dest: 'build/'
+          dest: 'build/arquivos/'
         ]
 
     connect:
