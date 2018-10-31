@@ -1,13 +1,9 @@
 ignoreReplace = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
                  /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/]
 
-
-port = process.env.PORT || 80
-console.log('Proxy port: ' + port)
-
 # Middleware that replaces vtexcommercestable and vteximg for vtexlocal
 # This enables the same proxy to handle both domains and avoid adding rules to /etc/hosts
-replaceHtmlBody = (environment, accountName, secureUrl) -> (req, res, next) ->
+replaceHtmlBody = (environment, accountName, secureUrl, port) -> (req, res, next) ->
   # Ignore requests to obvious non-HTML resources
   return next() if ignoreReplace.some (ignore) -> ignore.test(req.url)
 

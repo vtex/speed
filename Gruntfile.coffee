@@ -15,6 +15,8 @@ module.exports = (grunt) ->
   secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl or true
   port = process.env.PORT or pkg.port or 80
 
+  console.log('Running on port ' + port)
+
   compress = grunt.option('compress')
   verbose = grunt.option('verbose')
 
@@ -174,13 +176,13 @@ module.exports = (grunt) ->
         options:
           hostname: "*"
           livereload: true
-          port: process.env.PORT || 80
+          port: port
           middleware: [
             middlewares.disableCompression
             middlewares.rewriteLocationHeader(rewriteLocation)
             middlewares.replaceHost(portalHost)
             middlewares.replaceReferer(rewriteReferer)
-            middlewares.replaceHtmlBody(environment, accountName, secureUrl)
+            middlewares.replaceHtmlBody(environment, accountName, secureUrl, port)
             httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')
             proxy(imgProxyOptions)
