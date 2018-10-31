@@ -22,7 +22,7 @@ module.exports = (grunt) ->
 
   if secureUrl
     imgProxyOptions = url.parse("https://#{accountName}.vteximg.com.br/arquivos")
-  else 
+  else
     imgProxyOptions = url.parse("http://#{accountName}.vteximg.com.br/arquivos")
 
   imgProxyOptions.route = '/arquivos'
@@ -34,7 +34,7 @@ module.exports = (grunt) ->
 
   if port isnt 80
     localHost += ":#{port}"
-  
+
   if secureUrl
     portalProxyOptions = url.parse("https://#{portalHost}/")
   else
@@ -48,7 +48,6 @@ module.exports = (grunt) ->
       referer = referer.replace('http:', 'https:')
     return referer.replace(localHost, portalHost)
 
-
   rewriteLocation = (location) ->
     return location
       .replace('https:', 'http:')
@@ -57,7 +56,7 @@ module.exports = (grunt) ->
   config =
     clean:
       main: ['build']
-  
+
     copy:
       html:
         files: [
@@ -146,9 +145,9 @@ module.exports = (grunt) ->
 
     uglify:
       options:
-        sourceMap: 
+        sourceMap:
           root: '../../src/'
-        mangle: 
+        mangle:
           reserved: [
             'jQuery'
           ]
@@ -165,7 +164,7 @@ module.exports = (grunt) ->
         }]
 
     sprite:
-      all: 
+      all:
         src: 'src/sprite/*.png'
         dest: 'build/arquivos/spritesheet.png'
         destCss: 'build/arquivos/sprite.css'
