@@ -191,6 +191,8 @@ module.exports = (grunt) ->
             middlewares.replaceHost(portalHost)
             middlewares.replaceReferer(rewriteReferer)
             middlewares.replaceHtmlBody(environment, accountName, secureUrl, port)
+            # middlewares.replaceHtmlBody(environment, accountName, secureUrl, port, 'myChildAccountName')
+            middlewares.replaceHtmlBody(environment, accountName, secureUrl, port)
             httpPlease(host: portalHost, verbose: verbose)
             serveStatic('./build')
             proxy(imgProxyOptions)
