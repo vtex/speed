@@ -1,5 +1,7 @@
 # VTEX Speed
 
+> ⚠️ This tool is no longer maintained.
+
 VTEX Store development tools - reverse proxy, compilation, minification, optimization and more!
 
 ## Presentation - VTEX Day 2014
