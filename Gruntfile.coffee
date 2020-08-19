@@ -11,9 +11,19 @@ module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
   accountName = process.env.VTEX_ACCOUNT or pkg.accountName or 'basedevmkp'
-  environment = process.env.VTEX_ENV or pkg.env or 'vtexcommercestable'
-  secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl or true
-  port = process.env.PORT or pkg.port or 80
+  environment = process.env.VTEX_ENV or pkg.env or 'myvtex.com'
+  secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl or false
+  if secureUrl
+    portAuto = 443
+  else
+    portAuto = 80
+
+  port = process.env.PORT or pkg.port or portAuto or 80
+
+  if secureUrl
+    secureProtocol = 'https'
+  else
+    secureProtocol = 'http'
 
   console.log('Running on port ' + port)
 
@@ -29,7 +39,7 @@ module.exports = (grunt) ->
 
   # portalHost is also used by connect-http-please
   # example: basedevmkp.vtexcommercestable.com.br
-  portalHost = "#{accountName}.#{environment}.com.br"
+  portalHost = "#{accountName}.#{environment}"
   localHost = "#{accountName}.vtexlocal.com.br"
 
   if port isnt 80
@@ -185,6 +195,7 @@ module.exports = (grunt) ->
           hostname: "*"
           livereload: true
           port: port
+          protocol: secureProtocol
           middleware: [
             middlewares.disableCompression
             middlewares.rewriteLocationHeader(rewriteLocation)

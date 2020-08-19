@@ -27,6 +27,17 @@ Clone this repo or download and unzip it.
       "accountName": "your-store-account-name",
     }
 ```
+**Enable/Disable https**, please edit the `secureUrl` key to the `package.json` file. For example:
+- **true** - Enable https and use port 443
+- **false** - Disable https and use port 80
+```json
+    {
+      "secureUrl": true,
+    }
+```
+**Important**  
+- https required disable/ignore warning in brownser.
+- Enabling HTTPS automatically disables the livereload - [Read more about this issue](http://livereload.com/limitations/https/).
 
 Enter the folder you cloned or downloaded, install dependencies and run `npm start`:
 
