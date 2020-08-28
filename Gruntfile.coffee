@@ -11,7 +11,7 @@ module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
   accountName = process.env.VTEX_ACCOUNT or pkg.accountName or 'basedevmkp'
-  environment = process.env.VTEX_ENV or pkg.env or 'myvtex.com'
+  environment = process.env.VTEX_ENV or pkg.env or 'vtexcommercestable.com.br'
   secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl or false
   if secureUrl
     portAuto = 443
