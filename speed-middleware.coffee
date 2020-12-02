@@ -28,7 +28,7 @@ replaceHtmlBody = (environment, accountName, secureUrl, port) -> (req, res, next
     if data
       data = data.replace(new RegExp(environment, "g"), "vtexlocal")
       data = data.replace(new RegExp("vteximg", "g"), "vtexlocal")
-      if secureUrl
+      if !secureUrl
         data = data.replace(new RegExp("https:\/\/"+accountName, "g"), "http://"+accountName)
 
     if port isnt 80

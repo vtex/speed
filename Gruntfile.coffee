@@ -6,16 +6,28 @@ middlewares = require('./speed-middleware')
 sass = require('node-sass')
 tildeImporter = require('node-sass-tilde-importer')
 
-
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON('package.json')
 
   accountName = process.env.VTEX_ACCOUNT or pkg.accountName or 'basedevmkp'
-  environment = process.env.VTEX_ENV or pkg.env or 'vtexcommercestable'
-  secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl or true
-  port = process.env.PORT or pkg.port or 80
+  secureUrl = process.env.VTEX_SECURE_URL or pkg.secureUrl or false
+  if secureUrl
+    portAuto = 443
+    urlfim = "com.br"
+    environment = process.env.VTEX_ENV or pkg.env or 'vtexcommercestable'
+  else
+    portAuto = 80
+    urlfim = "com.br"
+    environment = process.env.VTEX_ENV or pkg.env or 'vtexcommercestable'
 
+  if secureUrl
+    secureProtocol = 'https'
+  else
+    secureProtocol = 'http'
+
+  port = process.env.PORT or pkg.port or portAuto or 80
   console.log('Running on port ' + port)
+  console.log('Running on secureUrl ' + secureUrl)
 
   compress = grunt.option('compress')
   verbose = grunt.option('verbose')
@@ -29,7 +41,7 @@ module.exports = (grunt) ->
 
   # portalHost is also used by connect-http-please
   # example: basedevmkp.vtexcommercestable.com.br
-  portalHost = "#{accountName}.#{environment}.com.br"
+  portalHost = "#{accountName}.#{environment}.#{urlfim}"
   localHost = "#{accountName}.vtexlocal.com.br"
 
   if port isnt 80
@@ -185,6 +197,7 @@ module.exports = (grunt) ->
           hostname: "*"
           livereload: true
           port: port
+          protocol: secureProtocol
           middleware: [
             middlewares.disableCompression
             middlewares.rewriteLocationHeader(rewriteLocation)
